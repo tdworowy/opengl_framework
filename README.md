@@ -1,0 +1,1 @@
+Examples from books [Developing Graphics Frameworks with Python and OpenGL](https://www.amazon.com/Developing-Graphics-Frameworks-Python-OpenGL-ebook/dp/B094JNXZ9M/ref=sr_1_1?crid=3M2K94PTH24LK&keywords=developing+graphics+frameworks+with+python+and+opengl&qid=1698921056&sprefix=developing+gra%2Caps%2C203&sr=8-1) 
