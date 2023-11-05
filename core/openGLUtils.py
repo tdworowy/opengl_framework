@@ -1,7 +1,9 @@
 from OpenGL.GL import *
+
+
 class OpenGLUtils:
     @staticmethod
-    def initialize_shader(shader_code:str, shader_type:str):
+    def initialize_shader(shader_code: str, shader_type: str):
         shader_code = f"#version 330\n{shader_code}"
         shader_ref = glCreateShader(shader_type)
 
@@ -20,9 +22,11 @@ class OpenGLUtils:
         return shader_ref
 
     @staticmethod
-    def initialize_program(vertex_shader_code:str, fragment_shader_code:str):
-        vertex_shader_ref = OpenGLUtils.initialize_shader(vertex_shader_code, GL_VERTEX_SHADER)
-        fragment_shader_ref = OpenGLUtils.initialize_shader(fragment_shader_code, GL_FRAGMENT_SHADER)
+    def initialize_program(vertex_shader_code: str, fragment_shader_code: str):
+        vertex_shader_ref = OpenGLUtils.initialize_shader(
+            vertex_shader_code, GL_VERTEX_SHADER)
+        fragment_shader_ref = OpenGLUtils.initialize_shader(
+            fragment_shader_code, GL_FRAGMENT_SHADER)
 
         program_ref = glCreateProgram()
 
@@ -46,5 +50,7 @@ class OpenGLUtils:
     def print_system_info():
         print(f"Vendor: {glGetString(GL_VENDOR).decode('utf-8')}")
         print(f"Renderer: {glGetString(GL_RENDERER).decode('utf-8')}")
-        print(f"OpenGL version supported: {glGetString(GL_VERSION).decode('utf-8')}")
-        print(f"GLSL version supported: {glGetString(GL_SHADING_LANGUAGE_VERSION).decode('utf-8')}")
+        print(
+            f"OpenGL version supported: {glGetString(GL_VERSION).decode('utf-8')}")
+        print(
+            f"GLSL version supported: {glGetString(GL_SHADING_LANGUAGE_VERSION).decode('utf-8')}")

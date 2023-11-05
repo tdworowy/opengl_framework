@@ -4,13 +4,16 @@ import sys
 
 from core.input import Input
 
+
 class Base(ABC):
-    def __init__(self, screen_size: tuple[int,int] = (512,512)):
+    def __init__(self, screen_size: tuple[int, int] = (512, 512)):
         pygame.init()
         display_flags = pygame.DOUBLEBUF | pygame.OPENGL
         pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)
         pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLESAMPLES, 4)
-        pygame.display.gl_set_attribute(pygame.GL_CONTEXT_PROFILE_MASK, pygame.GL_CONTEXT_PROFILE_CORE)
+        pygame.display.gl_set_attribute(
+            pygame.GL_CONTEXT_PROFILE_MASK,
+            pygame.GL_CONTEXT_PROFILE_CORE)
 
         self.screen = pygame.display.set_mode(screen_size, display_flags)
 
@@ -38,7 +41,7 @@ class Base(ABC):
 
             self.update()
 
-            ## render
+            # render
             pygame.display.flip()
             self.clock.tick(60)
 
