@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import List
 from OpenGL.GL import *
 import numpy as np
 
@@ -14,7 +13,7 @@ class DataType(Enum):
 
 
 class Attribute:
-    def __int__(self, data_type: DataType, data: List[int]):
+    def __init__(self, data_type: DataType, data: list[list[float]]):
         self.data_type = data_type
         self.data = data
 
@@ -22,7 +21,7 @@ class Attribute:
         self.upload_data()
 
     def upload_data(self):
-        data = np.array(self.data).astype(np.float)
+        data = np.array(self.data).astype(np.float32)
         glBindBuffer(GL_ARRAY_BUFFER, self.buffer_ref)
         glBufferData(GL_ARRAY_BUFFER, data.ravel(), GL_STATIC_DRAW)
 
