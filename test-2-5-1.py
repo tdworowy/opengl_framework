@@ -72,6 +72,8 @@ class Test(Base):
         color_attribute = Attribute(DataType.vec3, color_data)
         color_attribute.associate_variable(self.program_ref, "vertexColor")
         glDrawArrays(GL_LINE_LOOP, 0, self.vertex_count)
+       # glDrawArrays(GL_TRIANGLE_FAN, 0, self.vertex_count)
+
 
 
 if __name__ == "__main__":
