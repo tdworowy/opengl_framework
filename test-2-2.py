@@ -1,6 +1,7 @@
+from OpenGL.GL import *
+
 from core.base import Base
 from core.openGLUtils import OpenGLUtils
-from OpenGL.GL import *
 
 
 class Test(Base):

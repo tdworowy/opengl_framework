@@ -1,7 +1,9 @@
+from OpenGL.GL import *
+
 from core.base import Base
 from core.openGLUtils import OpenGLUtils
-from core.attribute import Attribute, DataType
-from OpenGL.GL import *
+from core.attribute import Attribute
+from core.data_type import DataType
 
 
 class Test(Base):

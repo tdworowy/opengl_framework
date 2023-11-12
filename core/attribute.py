@@ -1,15 +1,7 @@
-from enum import Enum
 from OpenGL.GL import *
 import numpy as np
 
-
-class DataType(Enum):
-
-    int = "int"
-    float = "float"
-    vec2 = "vec2"
-    vec3 = "vec3"
-    vec4 = "vec4"
+from core.data_type import DataType
 
 
 class Attribute:

@@ -1,9 +1,10 @@
 import random
+from OpenGL.GL import *
 
 from core.base import Base
 from core.openGLUtils import OpenGLUtils
-from core.attribute import Attribute, DataType
-from OpenGL.GL import *
+from core.attribute import Attribute
+from core.data_type import DataType
 
 
 def random_color() -> list[float]:
@@ -73,7 +74,6 @@ class Test(Base):
         color_attribute.associate_variable(self.program_ref, "vertexColor")
         glDrawArrays(GL_LINE_LOOP, 0, self.vertex_count)
        # glDrawArrays(GL_TRIANGLE_FAN, 0, self.vertex_count)
-
 
 
 if __name__ == "__main__":

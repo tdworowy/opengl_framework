@@ -23,6 +23,8 @@ class Base(ABC):
 
         self.input = Input()
 
+        self.time = 0
+
     @abstractmethod
     def initialize(self):
         pass
@@ -38,6 +40,9 @@ class Base(ABC):
             self.input.update()
             if self.input.quit:
                 self.running = False
+
+            self.delta_time = self.clock.get_time() / 1000
+            self.time += self.delta_time
 
             self.update()
 
