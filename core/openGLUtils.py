@@ -16,7 +16,8 @@ class OpenGLUtils:
             error_message = glGetShaderInfoLog(shader_ref)
             glDeleteShader(shader_ref)
 
-            error_message = f"\n{error_message.decode('utf-8')}\n code: {shader_code}"
+            error_message = error_message.decode('utf-8')
+            error_message = f"\n{error_message}\n code: {shader_code}"
             raise Exception(error_message)
 
         return shader_ref

@@ -1,4 +1,4 @@
-from math import  sin,cos
+from math import sin, cos
 from OpenGL.GL import *
 
 from core.base import Base
@@ -46,15 +46,14 @@ class Test(Base):
         self.base_color = Uniform(DataType.vec3, [1.0, 0.0, 0.0])
         self.base_color.locate_variable(self.program_ref, "baseColor")
 
-
     def update(self):
 
         self.translation.data[0] = 0.75 * cos(self.time)
         self.translation.data[1] = 0.75 * sin(self.time)
 
-        self.base_color.data[0] = (sin( self.time)  +1 ) / 2
-        self.base_color.data[1] = (sin( self.time + 3) +1 ) / 2
-        self.base_color.data[2] = (sin( self.time + 5) +1) / 2
+        self.base_color.data[0] = (sin(self.time) + 1) / 2
+        self.base_color.data[1] = (sin(self.time + 3) + 1) / 2
+        self.base_color.data[2] = (sin(self.time + 5) + 1) / 2
 
         glClear(GL_COLOR_BUFFER_BIT)
         glUseProgram(self.program_ref)
@@ -62,7 +61,6 @@ class Test(Base):
         self.translation.upload_data()
         self.base_color.upload_data()
         glDrawArrays(GL_TRIANGLES, 0, self.vertex_count)
-
 
 
 if __name__ == "__main__":

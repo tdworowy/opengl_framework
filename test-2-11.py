@@ -45,11 +45,32 @@ class Test(Base):
         self.base_color = Uniform(DataType.vec3, [1.0, 0.0, 0.0])
         self.base_color.locate_variable(self.program_ref, "baseColor")
 
+        self.speed = 1.5
+
     def update(self):
 
-        self.translation.data[0] += 0.01
+        distance = self.speed * self.delta_time
+
         if self.translation.data[0] > 1.2:
             self.translation.data[0] = -1.2
+
+        if self.translation.data[0] < -1.2:
+            self.translation.data[0] = 1.2
+
+        if self.translation.data[1] > 1.2:
+            self.translation.data[1] = -1.2
+
+        if self.translation.data[1] < -1.2:
+            self.translation.data[1] = 1.2
+
+        if self.input.is_key_pressed("left"):
+            self.translation.data[0] -= distance
+        if self.input.is_key_pressed("right"):
+            self.translation.data[0] += distance
+        if self.input.is_key_pressed("down"):
+            self.translation.data[1] -= distance
+        if self.input.is_key_pressed("up"):
+            self.translation.data[1] += distance
 
         glClear(GL_COLOR_BUFFER_BIT)
         glUseProgram(self.program_ref)
