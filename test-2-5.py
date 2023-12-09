@@ -1,5 +1,5 @@
 from core.base import Base
-from core.openGLUtils import OpenGLUtils
+from core.openGL_utils import OpenGLUtils
 from core.attribute import Attribute
 from OpenGL.GL import *
 from core.data_type import DataType

@@ -1,21 +1,19 @@
-from typing import Self
-
 import numpy as np
 
 from core.matrix import Matrix
 
 
 class Object3D:
-    def __int__(self):
+    def __init__(self):
         self.transform = Matrix.make_identity()
         self.parent = None
         self.children = []
 
-    def add(self, child: Self):
+    def add(self, child):
         self.children.append(child)
         child.parent = self
 
-    def remove(self, child: Self):
+    def remove(self, child):
         self.children.remove(child)
         child.parent = None
 
@@ -25,7 +23,7 @@ class Object3D:
         else:
             return self.parent.get_world_matrix() @ self.transform
 
-    def get_descendant_list(self) -> list[Self]:
+    def get_descendant_list(self) -> list:
         descendant = []
         node_to_process = [self]
 
@@ -46,15 +44,15 @@ class Object3D:
         m = Matrix.make_translation(x, y, z)
         self.apply_matrix(m, local_coord)
 
-    def rotate_x(self, angle: int, local_coord=True):
+    def rotate_x(self, angle: float, local_coord=True):
         m = Matrix.make_rotation_x(angle)
         self.apply_matrix(m, local_coord)
 
-    def rotate_y(self, angle: int, local_coord=True):
+    def rotate_y(self, angle: float, local_coord=True):
         m = Matrix.make_rotation_y(angle)
         self.apply_matrix(m, local_coord)
 
-    def rotate_z(self, angle: int, local_coord=True):
+    def rotate_z(self, angle: float, local_coord=True):
         m = Matrix.make_rotation_z(angle)
         self.apply_matrix(m, local_coord)
 
