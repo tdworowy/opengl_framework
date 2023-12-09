@@ -25,6 +25,7 @@ class Test(Base):
     def update(self):
         self.mesh.rotate_y(0.0514)
         self.mesh.rotate_x(0.0337)
+        self.renderere.render(self.scene, self.camera)
 
 
 if __name__ == "__main__":

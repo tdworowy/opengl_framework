@@ -32,4 +32,4 @@ class Material:
             elif name in self.settings.keys():
                 self.settings[name] = data
             else:
-                return Exception(f"Material has no property: {name}")
+                raise Exception(f"Material has no property: {name}")

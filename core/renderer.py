@@ -36,7 +36,7 @@ class Renderer:
             for variable_name, uniform_object in mesh.material.uniforms.items():
                 uniform_object.upload_data()
 
-            mesh.material.update_render_setings()
+            mesh.material.update_render_settings()
             glDrawArrays(
                 mesh.material.settings["drawStyle"],
                 0,
