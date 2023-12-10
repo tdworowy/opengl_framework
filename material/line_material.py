@@ -16,8 +16,8 @@ class LineMaterial(BasicMaterial):
         self.settings["lineType"] = LineType.connected
 
         self.draw_style_map = {
-            LineType.loop:GL.GL_LINE_LOOP,
-            LineType.segments:GL.GL_LINES,
+            LineType.loop: GL.GL_LINE_LOOP,
+            LineType.segments: GL.GL_LINES,
             LineType.connected: GL.GL_LINE_STRIP
         }
 

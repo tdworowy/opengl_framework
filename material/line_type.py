@@ -1,7 +1,8 @@
 from enum import StrEnum
 
+
 class LineType(StrEnum):
 
-    loop ="loop"
+    loop = "loop"
     segments = "segment"
     connected = "connected"
