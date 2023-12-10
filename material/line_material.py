@@ -1,5 +1,5 @@
 from material.basic_material import BasicMaterial
-from OpenGL.GL import *
+from OpenGL import GL
 
 from material.line_type import LineType
 
@@ -11,12 +11,18 @@ class LineMaterial(BasicMaterial):
 
         super().__init__()
 
-        self.settings["drawStyle"] = GL_LINE_STRIP
+        self.settings["drawStyle"] = GL.GL_LINE_STRIP
         self.settings["lineWidth"] = 1
         self.settings["lineType"] = LineType.connected
+
+        self.draw_style_map = {
+            LineType.loop:GL.GL_LINE_LOOP,
+            LineType.segments:GL.GL_LINES,
+            LineType.connected: GL.GL_LINE_STRIP
+        }
 
         self.set_properties(properties)
 
     def update_render_settings(self):
-        glLineWidth(self.settings["lineWidth"])
-        self.settings["drawStyle"] = self.settings["LineType"]
+        GL.glLineWidth(self.settings["lineWidth"])
+        self.settings["drawStyle"] = self.draw_style_map[self.settings["lineType"]]

@@ -1,9 +1,7 @@
-from enum import Enum
-from OpenGL.GL import *
+from enum import StrEnum
 
+class LineType(StrEnum):
 
-class LineType(Enum):
-
-    loop = GL_LINE_LOOP
-    segments = GL_LINES
-    connected = GL_LINE_STRIP
+    loop ="loop"
+    segments = "segment"
+    connected = "connected"

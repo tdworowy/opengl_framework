@@ -23,8 +23,6 @@ class Test(Base):
         self.scene.add(self.mesh)
 
     def update(self):
-        self.mesh.rotate_y(0.0514)
-        self.mesh.rotate_x(0.0337)
         self.renderer.render(self.scene, self.camera)
 
 

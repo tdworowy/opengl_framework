@@ -1,5 +1,5 @@
 from material.basic_material import BasicMaterial
-from OpenGL.GL import *
+from OpenGL import GL
 
 
 class PointMaterial(BasicMaterial):
@@ -8,15 +8,15 @@ class PointMaterial(BasicMaterial):
             properties = {}
         super().__init__()
 
-        self.settings["drawStyle"] = GL_POINT
+        self.settings["drawStyle"] = GL.GL_POINTS
         self.settings["pointSize"] = 8
         self.settings["roundedPoints"] = False
 
         self.set_properties(properties)
 
     def update_render_settings(self):
-        glPointSize(self.settings["pointSize"])
+        GL.glPointSize(self.settings["pointSize"])
         if self.settings["roundedPoints"]:
-            glEnable(GL_POINT_SMOOTH)
+            GL.glEnable(GL.GL_POINT_SMOOTH)
         else:
-            glDisable(GL_POINT_SMOOTH)
+            GL.glDisable(GL.GL_POINT_SMOOTH)
