@@ -1,5 +1,4 @@
 from geometry.ellipsoid_geometry import EllipsoidGeometry
-from math import sin, cos, pi
 
 
 class SphereGeometry(EllipsoidGeometry):

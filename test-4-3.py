@@ -9,7 +9,6 @@ from math import sin
 from numpy import arange
 from material.point_material import PointMaterial
 from material.line_material import LineMaterial
-from material.surface_material import SurfaceMaterial
 
 
 class Test(Base):

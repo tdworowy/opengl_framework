@@ -9,7 +9,7 @@ class ParametricGeometry(Geometry):
 
         super().__init__()  # super call is not in book example
         delta_u = (u_end - u_start) / u_resolution
-        delta_v = (v_end - v_start) / u_resolution
+        delta_v = (v_end - v_start) / v_resolution
 
         position = []
 
