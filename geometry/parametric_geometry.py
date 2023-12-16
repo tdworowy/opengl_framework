@@ -27,6 +27,16 @@ class ParametricGeometry(Geometry):
         C1, C2, C3 = [1, 0, 0], [0, 1, 0], [0, 0, 1]
         C4, C5, C6 = [0, 1, 1], [1, 0, 1], [1, 1, 0]
 
+        uvs = []
+        uv_data = []
+        for u_index in range(u_resolution + 1):
+            v_array = []
+            for v_index in range(v_resolution + 1):
+                u = u_index / u_resolution
+                v = v_index / v_resolution
+                v_array.append([u, v])
+            uvs.append(v_array)
+
         for x_index in range(u_resolution):
             for y_index in range(v_resolution):
                 p_a = position[x_index + 0][y_index + 0]
@@ -41,7 +51,15 @@ class ParametricGeometry(Geometry):
                                   p_d.copy()]
 
                 color_data += [C1, C2, C3, C4, C5, C6]
+                uv_a = uvs[x_index + 0][y_index + 0]
+                uv_b = uvs[x_index + 1][y_index + 0]
+                uv_c = uvs[x_index + 0][y_index + 1]
+                uv_d = uvs[x_index + 1][y_index + 1]
+                uv_data += [uv_a, uv_b, uv_c,
+                            uv_a, uv_c, uv_d]
+
         self.add_attribute(DataType.vec3, "vertexPosition", position_data)
         self.add_attribute(DataType.vec3, "vertexColor", color_data)
+        self.add_attribute(DataType.vec2, "vertexUV", uv_data)
 
         self.count_vertices()

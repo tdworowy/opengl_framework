@@ -62,4 +62,8 @@ class BoxGeometry(Geometry):
         self.add_attribute(DataType.vec3, "vertexPosition", position_data)
         self.add_attribute(DataType.vec3, "vertexColor", color_data)
 
+        T0, T1, T2, T3 = [0, 0], [1, 0], [0, 1], [1, 1]
+        uv_data = [T0, T1, T3, T0, T3, T2] * 6
+        self.add_attribute(DataType.vec2, "vertexUV", uv_data)
+
         self.count_vertices()

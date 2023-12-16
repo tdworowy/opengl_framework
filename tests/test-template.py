@@ -5,6 +5,8 @@ from core.camera import Camera
 from core.mesh import Mesh
 from geometry.box_geometry import BoxGeometry
 from material.surface_material import SurfaceMaterial
+from core.texture import Texture
+from material.texture_material import TextureMaterial
 
 
 class Test(Base):
