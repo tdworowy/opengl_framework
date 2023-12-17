@@ -75,3 +75,7 @@ class Object3D:
         self.transform.itemset((0, 3), position[0])
         self.transform.itemset((1, 3), position[1])
         self.transform.itemset((2, 3), position[2])
+
+    def look_at(self, target_position: list[int]):
+        self.transform = Matrix.make_look_at(
+            self.get_world_position(), target_position)
