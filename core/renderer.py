@@ -17,8 +17,13 @@ class Renderer:
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glClearColor(clear_Color[0], clear_Color[1], clear_Color[2], 1)
 
-    def render(self, scene: Scene, camera: Camera):
-        GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
+    def render(self, scene: Scene, camera: Camera,
+               clear_color=True, clear_depth=True):
+        if clear_color:
+            GL.glClear(GL.GL_COLOR_BUFFER_BIT)
+
+        if clear_depth:
+            GL.glClear(GL.GL_DEPTH_BUFFER_BIT)
 
         camera.update_view_matrix()
         descendant_list = scene.get_descendant_list()
