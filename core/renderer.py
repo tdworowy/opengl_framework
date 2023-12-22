@@ -2,7 +2,9 @@ from OpenGL import GL
 
 from core.camera import Camera
 from core.mesh import Mesh
+from core.render_target import RenderTarget
 from core.scene import Scene
+import pygame
 
 
 class Renderer:
@@ -17,8 +19,10 @@ class Renderer:
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glClearColor(clear_Color[0], clear_Color[1], clear_Color[2], 1)
 
+        self.window_size = pygame.display.get_surface().get_size()
+
     def render(self, scene: Scene, camera: Camera,
-               clear_color=True, clear_depth=True):
+               clear_color=True, clear_depth=True, render_target: RenderTarget = None):
         if clear_color:
             GL.glClear(GL.GL_COLOR_BUFFER_BIT)
 
@@ -27,6 +31,15 @@ class Renderer:
 
         camera.update_view_matrix()
         descendant_list = scene.get_descendant_list()
+        if render_target is None:
+            GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0)
+            GL.glViewport(0, 0, *self.window_size)
+        else:
+            GL.glBindFramebuffer(
+                GL.GL_FRAMEBUFFER,
+                render_target.frame_buffer_ref)
+            GL.glViewport(0, 0, render_target.width, render_target.height)
+
         def mesh_filter(x): return isinstance(x, Mesh)
         mesh_list = list(filter(mesh_filter, descendant_list))
 
