@@ -21,7 +21,7 @@ class VignetteEffect(BaseEffect):
            """
         fragment_shader_code = """
            in vec2 UV;
-           uniform sampler2D texture;
+           uniform sampler2D textureSampler;
            uniform float dimStart;
            uniform float dimEnd;
            uniform vec3 dimColor;
@@ -29,17 +29,11 @@ class VignetteEffect(BaseEffect):
 
            void main()
            {
-               vec4 color = Sample(texture, UV);
-               // Calculate position in clip space from UV coordinates
+               vec4 color = Sample(textureSampler, UV);
                vec2 position = 2 * UV - vec2(1, 1);
-               // Calculate distance from center, which affects brightness
                float d = length(position);
-               // Calculate brightness factor
-               // if d = dimStart, then b = 1; if d = dimEnd, then b = 0
                float b = (d - dimEnd) / (dimStart - dimEnd);
-               // Prevent over saturation
                b = clamp(b, 0, 1);
-               // Mix the texture color and dim color
                fragColor = vec4(b * color.rgb + (1 - b) * dimColor, 1);
            }
            """

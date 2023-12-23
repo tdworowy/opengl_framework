@@ -39,7 +39,7 @@ class Postprocessor:
         resolution = self.renderer.window_size
         target = RenderTarget(resolution)
         self.render_target_list[-1] = target
-        effect.uniforms["texture"].data[0] = target.texture.texture_ref
+        effect.uniforms["textureSampler"].data[0] = target.texture.texture_ref
 
         mesh = Mesh(self.rectangle_geometry, effect)
         post_scene.add(mesh)

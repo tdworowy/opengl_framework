@@ -17,14 +17,14 @@ class TemplateEffect(BaseEffect):
         """
         fragment_shader_code = """
         in vec2 UV;
-        uniform sampler2D texture;
+        uniform sampler2D textureSampler;
         out vec3 fragColor;
         void main()
         {
-            vec4 color = texture2D(texture, UV);
+            vec4 color = texture(textureSampler, UV);
             fragColor = color;
         }
         """
         super().__init__(vertex_shader_code, fragment_shader_code)
-        self.add_uniform(DataType.sampler2D, "texture", [None, 1])
+        self.add_uniform(DataType.sampler2D, "textureSampler", [None, 1])
         self.locate_uniforms()

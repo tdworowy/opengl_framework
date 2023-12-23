@@ -21,11 +21,11 @@ class TintEffect(BaseEffect):
         fragment_shader_code = """
         in vec2 UV;
         uniform vec3 tintColor;
-        uniform sampler2D texture;
+        uniform sampler2D textureSampler;
         out vec4 fragColor;
         void main()
         {
-            vec4 color = texture2D(texture, UV);
+            vec4 color = texture(textureSampler, UV);
             float gray = (color.r + color.g + color.b)/3.0;
             fragColor = vec4(gray * tintColor, 1.0);
         }
@@ -33,5 +33,5 @@ class TintEffect(BaseEffect):
         super().__init__(vertex_shader_code, fragment_shader_code)
 
         self.add_uniform(DataType.vec3, "tintColor", tint_color)
-        self.add_uniform(DataType.sampler2D, "texture", [None, 1])
+        self.add_uniform(DataType.sampler2D, "textureSampler", [None, 1])
         self.locate_uniforms()

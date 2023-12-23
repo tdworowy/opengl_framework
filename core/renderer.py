@@ -8,16 +8,13 @@ import pygame
 
 
 class Renderer:
-    def __init__(self, clear_color=None):
-        if clear_color is None:
-            clear_color = [0, 0, 0]
-
+    def __init__(self, clear_color=(0, 0, 0)):
         GL.glEnable(GL.GL_DEPTH_TEST)
         GL.glEnable(GL.GL_MULTISAMPLE)
         GL.glEnable(GL.GL_BLEND)
 
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
-        GL.glClearColor(clear_color[0], clear_color[1], clear_color[2], 1)
+        GL.glClearColor(*clear_color, 1)
 
         self.window_size = pygame.display.get_surface().get_size()
 
