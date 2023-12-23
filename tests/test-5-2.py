@@ -1,3 +1,5 @@
+import math
+
 from core.base import Base
 from core.renderer import Renderer
 from core.scene import Scene
@@ -31,6 +33,7 @@ class Test(Base):
         grass_geometry = RectangleGeometry(width=100, height=100)
         grass_material = TextureMaterial(Texture("../images/grass.jpg"))
         grass = Mesh(grass_geometry, grass_material)
+        grass.rotate_x(-math.pi / 2)
         self.scene.add(grass)
 
     def update(self):

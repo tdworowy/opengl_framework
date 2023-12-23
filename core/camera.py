@@ -18,7 +18,7 @@ class Camera(Object3D):
         self.projection_matrix = Matrix.make_perspective(
             angle_of_view, aspect_ratio, near, far)
 
-    def set_orthographic(self, left=1, right=1, bottom=1,
-                         top=1, near=0.1, far=1):
+    def set_orthographic(self, left=-1, right=1, bottom=-1,
+                         top=1, near=-1, far=1):
         self.projection_matrix = Matrix.make_orthographic(
             left, right, bottom, top, near, far)

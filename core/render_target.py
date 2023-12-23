@@ -2,7 +2,9 @@ from OpenGL import GL
 import pygame
 from core.texture import Texture
 
-#TODO something is wrong with it
+# TODO something is wrong with it
+
+
 class RenderTarget:
     def __init__(self, resolution=(512, 512),
                  texture: Texture = None, properties=None):
