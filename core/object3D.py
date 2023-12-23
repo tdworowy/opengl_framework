@@ -1,5 +1,4 @@
 import numpy as np
-
 from core.matrix import Matrix
 
 
@@ -79,3 +78,20 @@ class Object3D:
     def look_at(self, target_position: list[int]):
         self.transform = Matrix.make_look_at(
             self.get_world_position(), target_position)
+
+    def get_rotation_matrix(self) -> np.ndarray:
+        return np.ndarray([self.transform[0][0:3],
+                           self.transform[1][0:3],
+                           self.transform[2][0:3]])
+
+    def get_direction(self) -> list[int]:
+        forward = np.ndarray([0, 0, -1])
+        return list(self.get_rotation_matrix() @ forward)
+
+    def set_direction(self, direction: tuple):
+        position = self.get_position()
+        target_position = [position[0] + direction[0],
+                           position[1] + direction[1],
+                           position[2] + direction[2]
+                           ]
+        self.look_at(target_position)
