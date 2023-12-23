@@ -36,7 +36,7 @@ class Texture:
         width = self.surface.get_width()
         height = self.surface.get_height()
 
-        pixel_data = pygame.image.tostring(self.surface, "RGBA", 1)
+        pixel_data = pygame.image.tostring(self.surface, "RGBA", True)
         GL.glBindTexture(GL.GL_TEXTURE_2D, self.texture_ref)
         GL.glTexImage2D(
             GL.GL_TEXTURE_2D,

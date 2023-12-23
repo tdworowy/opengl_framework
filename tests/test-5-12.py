@@ -5,6 +5,8 @@ from core.renderer import Renderer
 from core.scene import Scene
 from core.camera import Camera
 from core.mesh import Mesh
+from effects.color_reduce_effect import ColorReduceEffect
+from effects.pixel_effect import PixelEffect
 from geometry.rectangle_geometry import RectangleGeometry
 from geometry.sphere_geometry import SphereGeometry
 from extras.movement_rig import MovementRig
@@ -33,7 +35,12 @@ class Test(Base):
         self.scene.add(sky)
 
         grass_geometry = RectangleGeometry(width=100, height=100)
-        grass_material = TextureMaterial(Texture("../images/grass.jpg"), properties={"repeatUV": [50, 50]})
+        grass_material = TextureMaterial(
+            Texture("../images/grass.jpg"),
+            properties={
+                "repeatUV": [
+                    50,
+                    50]})
         grass = Mesh(grass_geometry, grass_material)
         grass.rotate_x(-math.pi / 2)
         self.scene.add(grass)
@@ -47,6 +54,8 @@ class Test(Base):
         self.postprocessor = Postprocessor(
             self.renderer, self.scene, self.camera)
         self.postprocessor.add_effect(TintEffect(tint_color=[1, 0, 0]))
+        self.postprocessor.add_effect(ColorReduceEffect(levels=5))
+        self.postprocessor.add_effect(PixelEffect(resolution=(800, 600)))
 
     def update(self):
         self.sphere.rotate_y(0.01337)
