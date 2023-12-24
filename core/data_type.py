@@ -11,3 +11,4 @@ class DataType(Enum):
     vec4 = "vec4"
     mat4 = "mat4"
     sampler2D = "sampler2D"
+    light = "Light"

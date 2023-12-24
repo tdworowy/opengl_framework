@@ -28,7 +28,7 @@ class Test(Base):
         crate_geometry = BoxGeometry()
         crate_material = TextureMaterial(Texture("../images/crate.jpg"))
         crate = Mesh(crate_geometry, crate_material)
-        self.scene.add(crate)
+        self.scene.add(crate)  # TODO for some reason create is invisible
 
         grid = GridHelper(grid_color=[1, 1, 1], center_color=[1, 1, 0])
         grid.rotate_x(-3.14 / 2)
@@ -39,17 +39,17 @@ class Test(Base):
         self.hud_camera.set_orthographic(0, 800, 0, 600, 1, -1)
 
         label_geo1 = RectangleGeometry(
-            width=600, height=80, position=[
-                0, 600], alignment=[
-                0, 1])
+            width=600, height=80, position=(
+                0, 600), alignment=(
+                0, 1))
         label_mat1 = TextureMaterial(Texture("../images/crate.jpg"))
         label1 = Mesh(label_geo1, label_mat1)
         self.hud_scene.add(label1)
 
         label_geo2 = RectangleGeometry(
-            width=400, height=80, position=[
-                800, 0], alignment=[
-                1, 0])
+            width=400, height=80, position=(
+                800, 0), alignment=(
+                1, 0))
         label_mat2 = TextureMaterial(Texture("../images/crate-simulator.png"))
         label2 = Mesh(label_geo2, label_mat2)
         self.hud_scene.add(label2)

@@ -66,4 +66,12 @@ class BoxGeometry(Geometry):
         uv_data = [T0, T1, T3, T0, T3, T2] * 6
         self.add_attribute(DataType.vec2, "vertexUV", uv_data)
 
+        N1, N2 = [1, 0, 0], [-1, 0, 0]
+        N3, N4 = [0, 1, 0], [0, -1, 0]
+        N5, N6 = [0, 0, 1], [0, 0, -1]
+        normal_data = [N1] * 6 + [N2] * 6 + [N3] * \
+            6 + [N4] * 6 + [N5] * 6 + [N6] * 6
+        self.add_attribute(DataType.vec3, "vertexNormal", normal_data)
+        self.add_attribute(DataType.vec3, "faceNormal", normal_data)
+
         self.count_vertices()

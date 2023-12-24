@@ -4,12 +4,9 @@ from geometry.geometry import Geometry
 
 class RectangleGeometry(Geometry):
 
-    def __init__(self, width=1, height=1, position=None, alignment=None):
+    def __init__(self, width=1, height=1,
+                 position=(0, 0), alignment=(0.5, 0.5)):
         super().__init__()
-        if alignment is None:
-            alignment = [0.5, 0.5]
-        if position is None:
-            position = [0, 0]
         x, y = position
         a, b = alignment
         P0 = [x + -a * width / 2, y + -b * height / 2, 0]
@@ -27,5 +24,10 @@ class RectangleGeometry(Geometry):
         T0, T1, T2, T3 = [0, 0], [1, 0], [0, 1], [1, 1]
         uv_data = [T0, T1, T3, T0, T3, T2]
         self.add_attribute(DataType.vec2, "vertexUV", uv_data)
+
+        normal_vector = [0, 0, 1]
+        normal_data = [normal_vector] * 6
+        self.add_attribute(DataType.vec3, "vertexNormal", normal_data)
+        self.add_attribute(DataType.vec3, "faceNormal", normal_data)
 
         self.count_vertices()

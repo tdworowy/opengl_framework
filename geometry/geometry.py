@@ -1,3 +1,5 @@
+import numpy as np
+
 from core.attribute import Attribute
 from core.data_type import DataType
 
@@ -28,6 +30,26 @@ class Geometry:
             new_position_data.append(new_pos)
 
         self.attributes[variable_name].data = new_position_data
+        rotational_matrix = np.array([matrix[0][0:3],
+                                      matrix[0][0:3],
+                                      matrix[0][0:3]])
+        old_vertex_normal_data = self.attributes["vertexNormal"].data
+        old_face_normal_data = self.attributes["faceNormal"].data
+        new_vertex_normal_data = []
+        new_face_normal_data = []
+        for old_normal in old_vertex_normal_data:
+            new_normal = old_normal.copy()
+            new_normal = rotational_matrix @ new_normal
+            new_vertex_normal_data.append(new_normal)
+
+        for old_normal in old_face_normal_data:
+            new_normal = old_normal.copy()
+            new_normal = rotational_matrix @ new_normal
+            new_face_normal_data.append(new_normal)
+
+        self.attributes["vertexNormal"].data = new_vertex_normal_data
+        self.attributes["faceNormal"].data = new_face_normal_data
+
         self.attributes[variable_name].upload_data()
 
     def merge(self, other_geometry):

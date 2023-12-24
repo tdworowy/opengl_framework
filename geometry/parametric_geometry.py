@@ -1,5 +1,14 @@
 from core.data_type import DataType
 from geometry.geometry import Geometry
+import numpy as np
+
+
+def calc_normal(P0, P1, P2):
+    v1 = np.array(P1) - np.array(P0)
+    v2 = np.array(P2) - np.array(P0)
+    normal = np.copy(v1, v2)
+    normal = normal / np.linalg.norm(normal)
+    return normal
 
 
 class ParametricGeometry(Geometry):
@@ -37,6 +46,22 @@ class ParametricGeometry(Geometry):
                 v_array.append([u, v])
             uvs.append(v_array)
 
+        vertex_normals = []
+        for u_index in range(u_resolution + 1):
+            v_array = []
+            for v_index in range(v_resolution + 1):
+                u = u_start + u_index * delta_u
+                v = v_start + v_index * delta_v
+                h = 0.0001
+                P0 = surface_function(u, v)
+                P1 = surface_function(u + h, v)
+                P2 = surface_function(u, v + h)
+                normal_vector = calc_normal(P0, P1, P2)
+                v_array.append(normal_vector)
+            vertex_normals.append(v_array)
+
+        vertex_normal_data = []
+        face_normal_data = []
         for x_index in range(u_resolution):
             for y_index in range(v_resolution):
                 p_a = position[x_index + 0][y_index + 0]
@@ -58,8 +83,22 @@ class ParametricGeometry(Geometry):
                 uv_data += [uv_a, uv_b, uv_c,
                             uv_a, uv_c, uv_d]
 
+                n_a = vertex_normals[x_index + 0][y_index + 0]
+                n_b = vertex_normals[x_index + 1][y_index + 0]
+                n_c = vertex_normals[x_index + 0][y_index + 1]
+                n_d = vertex_normals[x_index + 1][y_index + 1]
+                vertex_normal_data += [n_a.copy(), n_b.copy(), n_c.copy(),
+                                       n_a.copy(), n_c.copy(), n_d.copy()]
+
+                fn0 = calc_normal(p_a, p_b, p_c)
+                fn1 = calc_normal(p_a, p_c, p_d)
+                face_normal_data += [fn0.copy(), fn0.copy(), fn0.copy(),
+                                     fn1.copy(), fn1.copy(), fn1.copy()]
+
         self.add_attribute(DataType.vec3, "vertexPosition", position_data)
         self.add_attribute(DataType.vec3, "vertexColor", color_data)
         self.add_attribute(DataType.vec2, "vertexUV", uv_data)
+        self.add_attribute(DataType.vec3, "vertexNormal", vertex_normal_data)
+        self.add_attribute(DataType.vec3, "faceNormal", face_normal_data)
 
         self.count_vertices()
