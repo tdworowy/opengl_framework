@@ -1,10 +1,10 @@
 from core.object3D import Object3D
 
 
-from enum import Enum
+from enum import IntEnum
 
 
-class LightType(Enum):
+class LightType(IntEnum):
     ZERO = 0
     AMBIENT = 1
     DIRECTIONAL = 2

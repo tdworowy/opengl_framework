@@ -3,10 +3,7 @@ from core.renderer import Renderer
 from core.scene import Scene
 from core.camera import Camera
 from core.mesh import Mesh
-from geometry.box_geometry import BoxGeometry
-from material.surface_material import SurfaceMaterial
 from core.texture import Texture
-from material.texture_material import TextureMaterial
 from geometry.sphere_geometry import SphereGeometry
 from light.ambient_light import AmbientLight
 from light.directional_light import DirectionalLight
@@ -39,8 +36,7 @@ class Test(Base):
         sphere_geometry = SphereGeometry()
         flat_material = FlatMaterial(
             properties={
-                "baseColor": [
-                    0.6, 0.2, 0, 2]})
+                "baseColor": [0.6, 0.2, 0, 2]})
 
         grid = Texture("../images/grid.jpg")
 
@@ -65,4 +61,3 @@ class Test(Base):
 
 if __name__ == "__main__":
     Test(screen_size=(800, 600)).run()
-    # TODO something is wrong with it

@@ -10,14 +10,14 @@ class FlatMaterial(Material):
             properties = {}
 
         vertex_shader_code = """
-        struct light
+        struct Light
         {
             int lightType;
             vec3 color;
             vec3 direction;
             vec3 position;
             vec3 attenuation;
-        }
+        };
         uniform Light light0;
         uniform Light light1;
         uniform Light light2;
@@ -67,7 +67,7 @@ class FlatMaterial(Material):
             gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
             UV = vertexUV;
             vec3 position = vec3(modelMatrix * vec4(vertexPosition, 1));
-            vec3 calcNormal = normalize(mat3(modelMatrix) * faceNormal);
+            vec3 normal = normalize(mat3(modelMatrix) * faceNormal);
             light = vec3(0, 0, 0);
             light += lightCalc( light0, position, normal);
             light += lightCalc( light1, position, normal);

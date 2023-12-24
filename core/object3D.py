@@ -80,12 +80,12 @@ class Object3D:
             self.get_world_position(), target_position)
 
     def get_rotation_matrix(self) -> np.ndarray:
-        return np.ndarray([self.transform[0][0:3],
-                           self.transform[1][0:3],
-                           self.transform[2][0:3]])
+        return np.array([self.transform[0][0:3],
+                         self.transform[1][0:3],
+                         self.transform[2][0:3]])
 
     def get_direction(self) -> list[int]:
-        forward = np.ndarray([0, 0, -1])
+        forward = np.array([0, 0, -1])
         return list(self.get_rotation_matrix() @ forward)
 
     def set_direction(self, direction: tuple):

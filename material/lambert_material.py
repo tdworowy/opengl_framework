@@ -29,14 +29,14 @@ class LambertMaterial(Material):
         }
         """
         fragment_shader_code = """
-        struct light
+        struct Light
         {
             int lightType;
             vec3 color;
             vec3 direction;
             vec3 position;
             vec3 attenuation;
-        }
+        };
         uniform Light light0;
         uniform Light light1;
         uniform Light light2;
@@ -77,6 +77,7 @@ class LambertMaterial(Material):
         in vec3 position;
         in vec2 UV;
         in vec3 light;
+        in vec3 normal;
         out vec4 fragColor;
 
         void main()
@@ -86,11 +87,11 @@ class LambertMaterial(Material):
             {
                 color *= texture(textureSampler, UV);
             }
-            light = vec3(0, 0, 0);
-            light += lightCalc( light0, position, normal);
-            light += lightCalc( light1, position, normal);
-            light += lightCalc( light2, position, normal);
-            light += lightCalc( light3, position, normal);
+            vec3 total = vec3(0, 0, 0);
+            total += lightCalc( light0, position, normal);
+            total += lightCalc( light1, position, normal);
+            total += lightCalc( light2, position, normal);
+            total += lightCalc( light3, position, normal);
             color *= vec4(total,  1);
             fragColor = color;
         }

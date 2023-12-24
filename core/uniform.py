@@ -42,7 +42,7 @@ class Uniform:
             case DataType.vec3:
                 GL.glUniform3f(
                     self.variable_ref,
-                    *self.data)
+                    *self.data[0:3])
             case DataType.vec4:
                 GL.glUniform4f(
                     self.variable_ref,
@@ -59,7 +59,7 @@ class Uniform:
             case DataType.light:
                 GL.glUniform1i(
                     self.variable_ref["lightType"],
-                    self.data.lighType)
+                    self.data.light_type)
                 GL.glUniform3f(self.variable_ref["color"], *self.data.color)
                 direction = self.data.get_direction()
                 GL.glUniform3f(self.variable_ref["direction"], *direction)
