@@ -4,12 +4,31 @@ from material.material import Material
 from OpenGL import GL
 
 
-class FlatMaterial(Material):
+class PhongMaterial(Material):
     def __init__(self, texture: Texture = None, properties=None):
         if properties is None:
             properties = {}
 
         vertex_shader_code = """
+        uniform mat4 projectionMatrix;
+        uniform mat4 viewMatrix;
+        uniform mat4 modelMatrix;
+        in vec3 vertexPosition;
+        in vec2 vertexUV;
+        in vec3 vertexNormal;
+        out vec3 position;
+        out vec2 UV;
+        out vec3 normal;
+
+        void main()
+        {
+           gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
+           position = vec3 (modelMatrix * vec4(vertexPosition,1));
+           UV = vertexUV;
+           normal = normalize(mat3(modelMatrix) * vertexNormal);
+        }
+        """
+        fragment_shader_code = """
         struct light
         {
             int lightType;
@@ -18,6 +37,9 @@ class FlatMaterial(Material):
             vec3 position;
             vec3 attenuation;
         }
+        uniform vec3 viewPosition;
+        uniform float specularStrength;
+        uniform float shininess;
         uniform Light light0;
         uniform Light light1;
         uniform Light light2;
@@ -49,37 +71,20 @@ class FlatMaterial(Material):
                 pointNormal = normalize(pointNormal);
                 diffuse = max(dot(pointNormal, -lightDirection),0.0);
                 diffuse *= attenuation;
+                if(diffuse >0)
+                {
+                    vec3 viewDirection = normalize(viewPosition - pointPosition);
+                    vec3 reflectDirection = reflect(lightDirection, pointNormal);
+                    specular = max(dot(viewDirection, reflectDirection), 0.0);
+                    specular = specularStrength * pow(specular,shininess);
+                }
             }
             return light.color * (ambient + diffuse + specular);
         }
-
-        uniform mat4 projectionMatrix;
-        uniform mat4 viewMatrix;
-        uniform mat4 modelMatrix;
-        in vec3 vertexPosition;
-        in vec2 vertexUV;
-        in vec3 faceNormal;
-        out vec2 UV;
-        out vec3 light;
-
-        void main()
-        {
-            gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
-            UV = vertexUV;
-            vec3 position = vec3(modelMatrix * vec4(vertexPosition, 1));
-            vec3 calcNormal = normalize(mat3(modelMatrix) * faceNormal);
-            light = vec3(0, 0, 0);
-            light += lightCalc( light0, position, normal);
-            light += lightCalc( light1, position, normal);
-            light += lightCalc( light2, position, normal);
-            light += lightCalc( light3, position, normal);
-        }
-
-        """
-        fragment_shader_code = """
         uniform vec3 baseColor;
         uniform bool useTexture;
         uniform sampler2D textureSampler;
+        in vec3 position;
         in vec2 UV;
         in vec3 light;
         out vec4 fragColor;
@@ -91,7 +96,12 @@ class FlatMaterial(Material):
             {
                 color *= texture(textureSampler, UV);
             }
-            color *=vec4(light, 1);
+            light = vec3(0, 0, 0);
+            light += lightCalc( light0, position, normal);
+            light += lightCalc( light1, position, normal);
+            light += lightCalc( light2, position, normal);
+            light += lightCalc( light3, position, normal);
+            color *= vec4(total,  1);
             fragColor = color;
         }
         """
@@ -104,6 +114,9 @@ class FlatMaterial(Material):
         self.add_uniform(DataType.light, "light2", None)
         self.add_uniform(DataType.light, "light3", None)
         self.add_uniform(DataType.bool, "useTexture", 0)
+        self.add_uniform(DataType.vec3, "viewPosition", [0, 0, 0])
+        self.add_uniform(DataType.float, "specularStrength", 1)
+        self.add_uniform(DataType.float, "shininess", 32)
 
         if texture is None:
             self.add_uniform(DataType.bool, "useTexture", False)

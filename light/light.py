@@ -5,13 +5,14 @@ from enum import Enum
 
 
 class LightType(Enum):
+    ZERO = 0
     AMBIENT = 1
     DIRECTIONAL = 2
     POINT = 3
 
 
 class Light(Object3D):
-    def __init__(self, light_type: LightType):
+    def __init__(self, light_type: LightType = LightType.ZERO):
         super().__init__()
         self.light_type = light_type
         self.color = (1, 1, 1)

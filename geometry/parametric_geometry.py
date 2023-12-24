@@ -3,12 +3,14 @@ from geometry.geometry import Geometry
 import numpy as np
 
 
-def calc_normal(P0, P1, P2):
-    v1 = np.array(P1) - np.array(P0)
-    v2 = np.array(P2) - np.array(P0)
-    normal = np.copy(v1, v2)
-    normal = normal / np.linalg.norm(normal)
-    return normal
+def calc_normal(p0, p1, p2):
+    v1 = np.array(p1) - np.array(p0)
+    v2 = np.array(p2) - np.array(p0)
+    orthogonal_vector = np.cross(v1, v2)
+    norm = np.linalg.norm(orthogonal_vector)
+    normal_vector = orthogonal_vector / norm if norm > 1e-6 \
+        else np.array(p0) / np.linalg.norm(p0)
+    return normal_vector
 
 
 class ParametricGeometry(Geometry):

@@ -4,6 +4,7 @@ from core.camera import Camera
 from core.mesh import Mesh
 from core.render_target import RenderTarget
 from core.scene import Scene
+from light.light import Light, LightType
 import pygame
 
 
@@ -39,6 +40,11 @@ class Renderer:
 
         def mesh_filter(x): return isinstance(x, Mesh)
         mesh_list = list(filter(mesh_filter, descendant_list))
+        def light_filter(x): return isinstance(x, Light)
+        light_list = list(filter(light_filter, descendant_list))
+
+        while len(light_list) < 4:
+            light_list.append(Light())
 
         for mesh in mesh_list:
             if not mesh.visible:
@@ -49,6 +55,15 @@ class Renderer:
             )
             mesh.material.uniforms["viewMatrix"].data = camera.view_matrix
             mesh.material.uniforms["projectionMatrix"].data = camera.projection_matrix
+
+            if "light0" in mesh.material.uniforms.keys():
+                for light_number in range(4):
+                    light_name = f"light{light_number}"
+                    light_object = light_list[light_number]
+                    mesh.material.uniforms[light_name].data = light_object
+            if "viewPosition" in mesh.material.uniforms.keys():
+                mesh.material.uniforms["viewPosition"].data = camera.get_world_position(
+                )
 
             for variable_name, uniform_object in mesh.material.uniforms.items():
                 uniform_object.upload_data()

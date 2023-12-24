@@ -4,12 +4,31 @@ from material.material import Material
 from OpenGL import GL
 
 
-class FlatMaterial(Material):
+class LambertMaterial(Material):
     def __init__(self, texture: Texture = None, properties=None):
         if properties is None:
             properties = {}
 
         vertex_shader_code = """
+        uniform mat4 projectionMatrix;
+        uniform mat4 viewMatrix;
+        uniform mat4 modelMatrix;
+        in vec3 vertexPosition;
+        in vec2 vertexUV;
+        in vec3 vertexNormal;
+        out vec3 position;
+        out vec2 UV;
+        out vec3 normal;
+
+        void main()
+        {
+           gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
+           position = vec3 (modelMatrix * vec4(vertexPosition,1));
+           UV = vertexUV;
+           normal = normalize(mat3(modelMatrix) * vertexNormal);
+        }
+        """
+        fragment_shader_code = """
         struct light
         {
             int lightType;
@@ -52,34 +71,10 @@ class FlatMaterial(Material):
             }
             return light.color * (ambient + diffuse + specular);
         }
-
-        uniform mat4 projectionMatrix;
-        uniform mat4 viewMatrix;
-        uniform mat4 modelMatrix;
-        in vec3 vertexPosition;
-        in vec2 vertexUV;
-        in vec3 faceNormal;
-        out vec2 UV;
-        out vec3 light;
-
-        void main()
-        {
-            gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
-            UV = vertexUV;
-            vec3 position = vec3(modelMatrix * vec4(vertexPosition, 1));
-            vec3 calcNormal = normalize(mat3(modelMatrix) * faceNormal);
-            light = vec3(0, 0, 0);
-            light += lightCalc( light0, position, normal);
-            light += lightCalc( light1, position, normal);
-            light += lightCalc( light2, position, normal);
-            light += lightCalc( light3, position, normal);
-        }
-
-        """
-        fragment_shader_code = """
         uniform vec3 baseColor;
         uniform bool useTexture;
         uniform sampler2D textureSampler;
+        in vec3 position;
         in vec2 UV;
         in vec3 light;
         out vec4 fragColor;
@@ -91,7 +86,12 @@ class FlatMaterial(Material):
             {
                 color *= texture(textureSampler, UV);
             }
-            color *=vec4(light, 1);
+            light = vec3(0, 0, 0);
+            light += lightCalc( light0, position, normal);
+            light += lightCalc( light1, position, normal);
+            light += lightCalc( light2, position, normal);
+            light += lightCalc( light3, position, normal);
+            color *= vec4(total,  1);
             fragColor = color;
         }
         """
