@@ -6,13 +6,8 @@ from material.line_type import LineType
 
 
 class GridHelper(Mesh):
-    def __init__(self, size=10, divisions=10, grid_color=None,
-                 center_color=None, line_width=1):
-        if center_color is None:
-            center_color = [0.5, 0.5, 0.5]
-        if grid_color is None:
-            grid_color = [0, 0, 0]
-
+    def __init__(self, size=10, divisions=10, grid_color=(0, 0, 0),
+                 center_color=(0.5, 0.5, 0.5), line_width=1):
         geometry = Geometry()
         position_data = []
         color_data = []

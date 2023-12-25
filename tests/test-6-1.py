@@ -11,6 +11,9 @@ from light.point_light import PointLight
 from material.flat_material import FlatMaterial
 from material.lambert_material import LambertMaterial
 from material.phong_material import PhongMaterial
+from extras.directional_light_helper import DirectionalLightHelper
+from extras.point_light_helper import PointLightHelper
+from math import sin
 
 
 class Test(Base):
@@ -26,12 +29,19 @@ class Test(Base):
         ambient = AmbientLight(color=(0.1, 0.1, 0.1))
         self.scene.add(ambient)
 
-        directional = DirectionalLight(
+        self.directional = DirectionalLight(
             color=(0.8, 0.8, 0.8), direction=(-1, -1, -2))
-        self.scene.add(directional)
+        self.scene.add(self.directional)
 
-        point = PointLight(color=(0.9, 0, 0), position=(1, 1, 0.8))
-        self.scene.add(point)
+        self.point = PointLight(color=(0.9, 0, 0), position=(1, 1, 0.8))
+        self.scene.add(self.point)
+
+        direct_helper = DirectionalLightHelper(self.directional)
+        self.directional.set_direction((3, 2, 0))
+        self.directional.add(direct_helper)
+
+        point_helper = PointLightHelper(self.point)
+        self.point.add(point_helper)
 
         sphere_geometry = SphereGeometry()
         flat_material = FlatMaterial(
@@ -56,6 +66,8 @@ class Test(Base):
         self.scene.add(sphere3)
 
     def update(self):
+        self.directional.set_direction((-1, sin(0.7 * self.time), -2))
+        self.point.set_position([1, sin(self.time), 0.8])
         self.renderer.render(self.scene, self.camera)
 
 

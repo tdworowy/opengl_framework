@@ -5,7 +5,8 @@ from OpenGL import GL
 
 
 class PhongMaterial(Material):
-    def __init__(self, texture: Texture = None, properties=None):
+    def __init__(self, texture: Texture = None,
+                 properties=None, bump_texture=None):
         if properties is None:
             properties = {}
 
@@ -84,6 +85,9 @@ class PhongMaterial(Material):
         uniform vec3 baseColor;
         uniform bool useTexture;
         uniform sampler2D textureSampler;
+        uniform bool useBumpTexture;
+        uniform Sampler2D bumpTextureSampler;
+        uniform float bumpStrength;
         in vec3 position;
         in vec2 UV;
         in vec3 light;
@@ -97,11 +101,16 @@ class PhongMaterial(Material):
             {
                 color *= texture(textureSampler, UV);
             }
+            vec3 bNormal = normal;
+            if(useBumpTexture)
+            {
+                bNormal += bumpStrength * vec3(texture(bumpTextureSampler, UV));
+            }
             vec3 total = vec3(0, 0, 0);
-            total += lightCalc( light0, position, normal);
-            total += lightCalc( light1, position, normal);
-            total += lightCalc( light2, position, normal);
-            total += lightCalc( light3, position, normal);
+            total += lightCalc( light0, position, bNormal);
+            total += lightCalc( light1, position, bNormal);
+            total += lightCalc( light2, position, bNormal);
+            total += lightCalc( light3, position, bNormal);
             color *= vec4(total,  1);
             fragColor = color;
         }
@@ -126,6 +135,15 @@ class PhongMaterial(Material):
             self.add_uniform(
                 DataType.sampler2D, "textureSampler", [
                     texture.texture_ref, 1])
+
+        if bump_texture is None:
+            self.add_uniform(DataType.bool, "useBumpTexture", False)
+        else:
+            self.add_uniform(DataType.bool, "useBumpTexture", True)
+            self.add_uniform(
+                DataType.sampler2D, "bumpTextureSampler", [
+                    bump_texture.texture_ref, 2])
+            self.add_uniform(DataType.float, "bumpStrength", 1.0)
 
         self.locate_uniforms()
 
