@@ -55,11 +55,20 @@ class Test(Base):
         self.postprocessor = Postprocessor(
             self.renderer, self.scene, self.camera)
         self.postprocessor.add_effect(BrightFilterEffect(2.4))
-        self.postprocessor.add_effect(HorizontalBlurEffect(texture_size=(800, 600), blur_radius=50))
-        self.postprocessor.add_effect(VerticalBlurEffect(texture_size=(800, 600), blur_radius=50))
+        self.postprocessor.add_effect(
+            HorizontalBlurEffect(
+                texture_size=(
+                    800, 600), blur_radius=50))
+        self.postprocessor.add_effect(
+            VerticalBlurEffect(
+                texture_size=(
+                    800, 600), blur_radius=50))
         main_scene = self.postprocessor.render_target_list[0].texture
-        self.postprocessor.add_effect(AdditiveBlendEffect(main_scene, original_strength=2, blend_strength=1))
-
+        self.postprocessor.add_effect(
+            AdditiveBlendEffect(
+                main_scene,
+                original_strength=2,
+                blend_strength=1))
 
     def update(self):
         self.sphere.rotate_y(0.01337)

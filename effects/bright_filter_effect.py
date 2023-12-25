@@ -18,12 +18,12 @@ class BrightFilterEffect(BaseEffect):
         fragment_shader_code = """
         in vec2 UV;
         uniform sampler2D textureSampler;
-        uniform float threshold; 
+        uniform float threshold;
         out vec4 fragColor;
         void main()
         {
             vec4 color = texture(textureSampler, UV);
-            if(color.r + color.g + color.b < threshold) 
+            if(color.r + color.g + color.b < threshold)
             {
                 discard;
             }
@@ -32,5 +32,5 @@ class BrightFilterEffect(BaseEffect):
         """
         super().__init__(vertex_shader_code, fragment_shader_code)
         self.add_uniform(DataType.sampler2D, "textureSampler", [None, 1])
-        self.add_uniform(DataType.float,"threshold",threshold)
+        self.add_uniform(DataType.float, "threshold", threshold)
         self.locate_uniforms()
