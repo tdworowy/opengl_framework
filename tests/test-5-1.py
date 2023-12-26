@@ -4,7 +4,6 @@ from core.scene import Scene
 from core.camera import Camera
 from core.mesh import Mesh
 from geometry.rectangle_geometry import RectangleGeometry
-from material.surface_material import SurfaceMaterial
 from core.texture import Texture
 from material.texture_material import TextureMaterial
 

@@ -3,14 +3,11 @@ from core.renderer import Renderer
 from core.scene import Scene
 from core.camera import Camera
 from core.mesh import Mesh
-from geometry.box_geometry import BoxGeometry
 from geometry.rectangle_geometry import RectangleGeometry
 from light.ambient_light import AmbientLight
 from light.point_light import PointLight
 from material.lambert_material import LambertMaterial
-from material.surface_material import SurfaceMaterial
 from core.texture import Texture
-from material.texture_material import TextureMaterial
 
 
 class Test(Base):

@@ -7,12 +7,9 @@ from core.camera import Camera
 from core.mesh import Mesh
 from extras.grid_helper import GridHelper
 from extras.movement_rig import MovementRig
-from geometry.box_geometry import BoxGeometry
 from geometry.rectangle_geometry import RectangleGeometry
 from material.spite_material import SpriteMaterial
-from material.surface_material import SurfaceMaterial
 from core.texture import Texture
-from material.texture_material import TextureMaterial
 
 
 class Test(Base):
