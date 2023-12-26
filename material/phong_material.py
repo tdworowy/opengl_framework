@@ -6,7 +6,7 @@ from OpenGL import GL
 
 class PhongMaterial(Material):
     def __init__(self, texture: Texture = None,
-                 properties=None, bump_texture=None):
+                 properties=None, bump_texture=None, use_shadow=False):
         if properties is None:
             properties = {}
 
@@ -21,8 +21,27 @@ class PhongMaterial(Material):
         out vec2 UV;
         out vec3 normal;
 
+        struct shadow
+        {
+            vec3 lightDirection;
+            mat4 projectionMatrix;
+            mat4 viewMatrix;
+            sampler2D deptTextureSampler;
+            float strength;
+            float bias;
+
+        };
+        uniform useShadow;
+        uniform Shadow shadow0;
+        out vec3 shadowPosition0;
+
         void main()
         {
+           if( useShadow )
+           {
+              vec4 temp0 = shadow0.projectionMatrix * shadow0.viewMatrix * modelMatrix * vec4(vertexPosition, 1);
+              shadowPosition0 = vec3(temp0);
+           }
            gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
            position = vec3 (modelMatrix * vec4(vertexPosition,1));
            UV = vertexUV;
@@ -94,6 +113,20 @@ class PhongMaterial(Material):
         in vec3 normal;
         out vec4 fragColor;
 
+        struct shadow
+        {
+            vec3 lightDirection;
+            mat4 projectionMatrix;
+            mat4 viewMatrix;
+            sampler2D deptTextureSampler;
+            float strength;
+            float bias;
+
+        };
+        uniform useShadow;
+        uniform Shadow shadow0;
+        out vec3 shadowPosition0;
+
         void main()
         {
             vec4 color = vec4(baseColor, 1.0);
@@ -112,6 +145,22 @@ class PhongMaterial(Material):
             total += lightCalc( light2, position, bNormal);
             total += lightCalc( light3, position, bNormal);
             color *= vec4(total,  1);
+
+            if(useShadow)
+            {
+                float cosAngle = dot(normalize(normal), -normalize(shadow0.lightDirection));
+                bool facingLight = (cosAngle > 0.01):
+                vec3 shadowCoord = (shadowPosition0.xyz + 1.0) /2.0 ;
+                float closestDistanceToLight = texture(shadow0.depthTextureSampler, shadowCoord.xy).r;
+                float fragmentDistanceToLight = clamp(shadowCoord.z, 0, 1);
+                bool inShadow = (fragmentDistanceToLight > closestDistanceToLight + shadow0.bias);
+
+                if(facingLight && inShadow)
+                {
+                    float s = 1.0 - shadow0.strength;
+                    color *= vec4(s, s, s,1);
+                }
+            }
             fragColor = color;
         }
         """

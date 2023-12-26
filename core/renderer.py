@@ -4,7 +4,8 @@ from core.camera import Camera
 from core.mesh import Mesh
 from core.render_target import RenderTarget
 from core.scene import Scene
-from light.light import Light, LightType
+from light.light import Light
+from light.shadow import Shadow
 import pygame
 
 
@@ -18,6 +19,15 @@ class Renderer:
         GL.glClearColor(*clear_color, 1)
 
         self.window_size = pygame.display.get_surface().get_size()
+        self.shadow_enabled = False
+
+    def enable_shadows(self, shadow_light: Light,
+                       strength=0.5, resolution=(512, 512)):
+        self.shadow_enabled = True
+        self.shadow_object = Shadow(
+            shadow_light,
+            strength=strength,
+            resolution=resolution)
 
     def render(self, scene: Scene, camera: Camera,
                clear_color=True, clear_depth=True, render_target: RenderTarget = None):
@@ -28,7 +38,7 @@ class Renderer:
             GL.glClear(GL.GL_DEPTH_BUFFER_BIT)
 
         camera.update_view_matrix()
-        descendant_list = scene.get_descendant_list()
+
         if render_target is None:
             GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0)
             GL.glViewport(0, 0, *self.window_size)
@@ -38,8 +48,37 @@ class Renderer:
                 render_target.frame_buffer_ref)
             GL.glViewport(0, 0, render_target.width, render_target.height)
 
+        descendant_list = scene.get_descendant_list()
         def mesh_filter(x): return isinstance(x, Mesh)
         mesh_list = list(filter(mesh_filter, descendant_list))
+        if self.shadow_enabled:
+            GL.glBindFramebuffer(
+                GL.GL_FRAMEBUFFER,
+                self.shadow_object.render_target.frame_buffer_ref)
+            GL.glViewport(
+                0,
+                0,
+                self.shadow_object.render_target.width,
+                self.shadow_object.render_target.height)
+            GL.glClearColor(1, 1, 1, 1)
+            GL.GL_CLEAR(GL.GL_COLOR_BUFFER_BIT)
+            GL.GL_CLEAR(GL.GL_DEPTH_BUFFER_BIT)
+            GL.glUseProgram(self.shadow_object.material.program_ref)
+
+            self.shadow_object.update_internal()
+
+            for mesh in mesh_list:
+                if not mesh.visible:
+                    continue
+                if mesh.material.settings["drawStyle"] != GL.GL_TRIANGLES:
+                    continue
+                GL.glBindVertexArray(mesh.vao_ref)
+                self.shadow_object.material.uniforms["modelMatrix"].data = mesh.get_world_matrix(
+                )
+                for var_name, unif_obj in self.shadow_object.material.uniforms.items():
+                    unif_obj.upload_data()
+                GL.glDrawArrays(GL.GL_TRIANGLES, 0, mesh.geometry.vertex_count)
+
         def light_filter(x): return isinstance(x, Light)
         light_list = list(filter(light_filter, descendant_list))
 
@@ -55,6 +94,9 @@ class Renderer:
             )
             mesh.material.uniforms["viewMatrix"].data = camera.view_matrix
             mesh.material.uniforms["projectionMatrix"].data = camera.projection_matrix
+
+            if self.shadow_enabled and "shadow0" in mesh.material.uniforms.keys():
+                mesh.material.uniforms["shadow0"].data = self.shadow_object
 
             if "light0" in mesh.material.uniforms.keys():
                 for light_number in range(4):
