@@ -12,6 +12,6 @@ from geometry.sphere_geometry import SphereGeometry
 from extras.movement_rig import MovementRig
 from extras.directional_light_helper import DirectionalLightHelper
 
-class Test(Base)
+class Test(Base):
     def initialize(self):
         pass
