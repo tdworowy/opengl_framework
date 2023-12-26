@@ -92,13 +92,13 @@ class Uniform:
                     self.variable_ref["projectionMatrix"],
                     1,
                     GL.GL_TRUE,
-                    self.data.camare.projection_matrix)
+                    self.data.camera.projection_matrix)
                 GL.glUniformMatrix4fv(self.variable_ref["viewMatrix"], 1, GL.GL_TRUE,
-                                      self.data.camare.view_matrix)
+                                      self.data.camera.view_matrix)
 
                 texture_object_ref = self.data.render_target.texture.texture_ref
                 texture_unit_ref = 15
-                GL.glActiveTexture(f"{GL.GL_TEXTURE0}{texture_unit_ref}")
+                GL.glActiveTexture(GL.GL_TEXTURE0 + texture_unit_ref)
                 GL.glBindTexture(GL.GL_TEXTURE_2D, texture_object_ref)
                 GL.glUniform1i(
                     self.variable_ref["depthTextureSampler"],

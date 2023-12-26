@@ -61,8 +61,8 @@ class Renderer:
                 self.shadow_object.render_target.width,
                 self.shadow_object.render_target.height)
             GL.glClearColor(1, 1, 1, 1)
-            GL.GL_CLEAR(GL.GL_COLOR_BUFFER_BIT)
-            GL.GL_CLEAR(GL.GL_DEPTH_BUFFER_BIT)
+            GL.glClear(GL.GL_COLOR_BUFFER_BIT)
+            GL.glClear(GL.GL_DEPTH_BUFFER_BIT)
             GL.glUseProgram(self.shadow_object.material.program_ref)
 
             self.shadow_object.update_internal()

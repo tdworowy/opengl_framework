@@ -21,17 +21,17 @@ class PhongMaterial(Material):
         out vec2 UV;
         out vec3 normal;
 
-        struct shadow
+        struct Shadow
         {
             vec3 lightDirection;
             mat4 projectionMatrix;
             mat4 viewMatrix;
-            sampler2D deptTextureSampler;
+            sampler2D depthTextureSampler;
             float strength;
             float bias;
 
         };
-        uniform useShadow;
+        uniform bool useShadow;
         uniform Shadow shadow0;
         out vec3 shadowPosition0;
 
@@ -105,7 +105,7 @@ class PhongMaterial(Material):
         uniform bool useTexture;
         uniform sampler2D textureSampler;
         uniform bool useBumpTexture;
-        uniform Sampler2D bumpTextureSampler;
+        uniform sampler2D bumpTextureSampler;
         uniform float bumpStrength;
         in vec3 position;
         in vec2 UV;
@@ -113,17 +113,17 @@ class PhongMaterial(Material):
         in vec3 normal;
         out vec4 fragColor;
 
-        struct shadow
+        struct Shadow
         {
             vec3 lightDirection;
             mat4 projectionMatrix;
             mat4 viewMatrix;
-            sampler2D deptTextureSampler;
+            sampler2D depthTextureSampler;
             float strength;
             float bias;
 
         };
-        uniform useShadow;
+        uniform bool useShadow;
         uniform Shadow shadow0;
         out vec3 shadowPosition0;
 
@@ -135,7 +135,7 @@ class PhongMaterial(Material):
                 color *= texture(textureSampler, UV);
             }
             vec3 bNormal = normal;
-            if(useBumpTexture)
+            if (useBumpTexture)
             {
                 bNormal += bumpStrength * vec3(texture(bumpTextureSampler, UV));
             }
@@ -146,11 +146,11 @@ class PhongMaterial(Material):
             total += lightCalc( light3, position, bNormal);
             color *= vec4(total,  1);
 
-            if(useShadow)
+            if (useShadow)
             {
                 float cosAngle = dot(normalize(normal), -normalize(shadow0.lightDirection));
-                bool facingLight = (cosAngle > 0.01):
-                vec3 shadowCoord = (shadowPosition0.xyz + 1.0) /2.0 ;
+                bool facingLight = (cosAngle > 0.01);
+                vec3 shadowCoord = (shadowPosition0.xyz + 1.0)/2.0;
                 float closestDistanceToLight = texture(shadow0.depthTextureSampler, shadowCoord.xy).r;
                 float fragmentDistanceToLight = clamp(shadowCoord.z, 0, 1);
                 bool inShadow = (fragmentDistanceToLight > closestDistanceToLight + shadow0.bias);
@@ -193,6 +193,12 @@ class PhongMaterial(Material):
                 DataType.sampler2D, "bumpTextureSampler", [
                     bump_texture.texture_ref, 2])
             self.add_uniform(DataType.float, "bumpStrength", 1.0)
+
+        if not use_shadow:
+            self.add_uniform(DataType.bool, "useShadow", False)
+        else:
+            self.add_uniform(DataType.bool, "useShadow", True)
+            self.add_uniform(DataType.shadow, "shadow0", None)
 
         self.locate_uniforms()
 

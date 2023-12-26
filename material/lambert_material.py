@@ -21,17 +21,17 @@ class LambertMaterial(Material):
         out vec2 UV;
         out vec3 normal;
 
-        struct shadow
+        struct Shadow
         {
             vec3 lightDirection;
             mat4 projectionMatrix;
             mat4 viewMatrix;
-            sampler2D deptTextureSampler;
+            sampler2D depthTextureSampler;
             float strength;
             float bias;
 
         };
-        uniform useShadow;
+        uniform bool useShadow;
         uniform Shadow shadow0;
         out vec3 shadowPosition0;
 
@@ -104,17 +104,17 @@ class LambertMaterial(Material):
         in vec3 normal;
         out vec4 fragColor;
 
-        struct shadow
+        struct Shadow
         {
             vec3 lightDirection;
             mat4 projectionMatrix;
             mat4 viewMatrix;
-            sampler2D deptTextureSampler;
+            sampler2D depthTextureSampler;
             float strength;
             float bias;
 
         };
-        uniform useShadow;
+        uniform bool useShadow;
         uniform Shadow shadow0;
         out vec3 shadowPosition0;
 
@@ -139,7 +139,7 @@ class LambertMaterial(Material):
             if(useShadow)
             {
                 float cosAngle = dot(normalize(normal), -normalize(shadow0.lightDirection));
-                bool facingLight = (cosAngle > 0.01):
+                bool facingLight = (cosAngle > 0.01);
                 vec3 shadowCoord = (shadowPosition0.xyz + 1.0) /2.0 ;
                 float closestDistanceToLight = texture(shadow0.depthTextureSampler, shadowCoord.xy).r;
                 float fragmentDistanceToLight = clamp(shadowCoord.z, 0, 1);
