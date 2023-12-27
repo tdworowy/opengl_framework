@@ -64,9 +64,8 @@ class Test(Base):
         self.renderer.render(self.scene, self.camera)
 
         shadow_cam = self.renderer.shadow_object.camera
-        self.renderer.render(self.scene, shadow_cam)
+        self.renderer.render(self.scene, self.camera)
 
 
 if __name__ == "__main__":
     Test(screen_size=(800, 600)).run()
-    # TODO something is wrong with it

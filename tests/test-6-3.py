@@ -52,19 +52,22 @@ class Test(Base):
         self.sphere.set_position([0, 1, 0])
         self.scene.add(self.sphere)
 
-        self.postprocessor = Postprocessor(
+        self.postprocessor1 = Postprocessor(
             self.renderer, self.scene, self.camera)
-        self.postprocessor.add_effect(BrightFilterEffect(2.4))
-        self.postprocessor.add_effect(
+        self.postprocessor1.add_effect(BrightFilterEffect(2.4))
+        self.postprocessor1.add_effect(
             HorizontalBlurEffect(
                 texture_size=(
                     800, 600), blur_radius=50))
-        self.postprocessor.add_effect(
+        self.postprocessor1.add_effect(
             VerticalBlurEffect(
                 texture_size=(
                     800, 600), blur_radius=50))
-        main_scene = self.postprocessor.render_target_list[0].texture
-        self.postprocessor.add_effect(
+
+        self.postprocessor2 = Postprocessor(
+            self.renderer, self.scene, self.camera)
+        main_scene = self.postprocessor1.render_target_list[0].texture
+        self.postprocessor2.add_effect(
             AdditiveBlendEffect(
                 main_scene,
                 original_strength=2,
@@ -73,7 +76,8 @@ class Test(Base):
     def update(self):
         self.sphere.rotate_y(0.01337)
         self.rig.update(self.input, self.delta_time)
-        self.postprocessor.render()
+        self.postprocessor1.render()
+        self.postprocessor2.render()
 
 
 if __name__ == "__main__":

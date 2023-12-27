@@ -13,9 +13,6 @@ class Renderer:
     def __init__(self, clear_color=(0, 0, 0)):
         GL.glEnable(GL.GL_DEPTH_TEST)
         GL.glEnable(GL.GL_MULTISAMPLE)
-        GL.glEnable(GL.GL_BLEND)
-
-        GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glClearColor(*clear_color, 1)
 
         self.window_size = pygame.display.get_surface().get_size()
@@ -31,25 +28,12 @@ class Renderer:
 
     def render(self, scene: Scene, camera: Camera,
                clear_color=True, clear_depth=True, render_target: RenderTarget = None):
-        if clear_color:
-            GL.glClear(GL.GL_COLOR_BUFFER_BIT)
-
-        if clear_depth:
-            GL.glClear(GL.GL_DEPTH_BUFFER_BIT)
-
-        camera.update_view_matrix()
-
-        if render_target is None:
-            GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0)
-            GL.glViewport(0, 0, *self.window_size)
-        else:
-            GL.glBindFramebuffer(
-                GL.GL_FRAMEBUFFER,
-                render_target.frame_buffer_ref)
-            GL.glViewport(0, 0, render_target.width, render_target.height)
 
         descendant_list = scene.get_descendant_list()
-        def mesh_filter(x): return isinstance(x, Mesh)
+
+        def mesh_filter(x):
+            return isinstance(x, Mesh)
+
         mesh_list = list(filter(mesh_filter, descendant_list))
         if self.shadow_enabled:
             GL.glBindFramebuffer(
@@ -78,6 +62,33 @@ class Renderer:
                 for var_name, unif_obj in self.shadow_object.material.uniforms.items():
                     unif_obj.upload_data()
                 GL.glDrawArrays(GL.GL_TRIANGLES, 0, mesh.geometry.vertex_count)
+
+        if render_target is None:
+            GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0)
+            GL.glViewport(0, 0, *self.window_size)
+        else:
+            GL.glBindFramebuffer(
+                GL.GL_FRAMEBUFFER,
+                render_target.frame_buffer_ref)
+            GL.glViewport(0, 0, render_target.width, render_target.height)
+
+        if clear_color:
+            GL.glClear(GL.GL_COLOR_BUFFER_BIT)
+
+        if clear_depth:
+            GL.glClear(GL.GL_DEPTH_BUFFER_BIT)
+
+        GL.glEnable(GL.GL_BLEND)
+        GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
+        camera.update_view_matrix()
+
+        descendant_list = scene.get_descendant_list()
+        mesh_list = list(
+            filter(
+                lambda x: isinstance(
+                    x,
+                    Mesh),
+                descendant_list))
 
         def light_filter(x): return isinstance(x, Light)
         light_list = list(filter(light_filter, descendant_list))
