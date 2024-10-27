@@ -37,11 +37,8 @@ class Test(Base):
 
         grass_geometry = RectangleGeometry(width=100, height=100)
         grass_material = TextureMaterial(
-            Texture("../images/grass.jpg"),
-            properties={
-                "repeatUV": [
-                    50,
-                    50]})
+            Texture("../images/grass.jpg"), properties={"repeatUV": [50, 50]}
+        )
         grass = Mesh(grass_geometry, grass_material)
         grass.rotate_x(-math.pi / 2)
         self.scene.add(grass)
@@ -52,26 +49,20 @@ class Test(Base):
         self.sphere.set_position([0, 1, 0])
         self.scene.add(self.sphere)
 
-        self.postprocessor1 = Postprocessor(
-            self.renderer, self.scene, self.camera)
+        self.postprocessor1 = Postprocessor(self.renderer, self.scene, self.camera)
         self.postprocessor1.add_effect(BrightFilterEffect(2.4))
         self.postprocessor1.add_effect(
-            HorizontalBlurEffect(
-                texture_size=(
-                    800, 600), blur_radius=50))
+            HorizontalBlurEffect(texture_size=(800, 600), blur_radius=50)
+        )
         self.postprocessor1.add_effect(
-            VerticalBlurEffect(
-                texture_size=(
-                    800, 600), blur_radius=50))
+            VerticalBlurEffect(texture_size=(800, 600), blur_radius=50)
+        )
 
-        self.postprocessor2 = Postprocessor(
-            self.renderer, self.scene, self.camera)
+        self.postprocessor2 = Postprocessor(self.renderer, self.scene, self.camera)
         main_scene = self.postprocessor1.render_target_list[0].texture
         self.postprocessor2.add_effect(
-            AdditiveBlendEffect(
-                main_scene,
-                original_strength=2,
-                blend_strength=1))
+            AdditiveBlendEffect(main_scene, original_strength=2, blend_strength=1)
+        )
 
     def update(self):
         self.sphere.rotate_y(0.01337)

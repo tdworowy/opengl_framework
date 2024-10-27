@@ -34,15 +34,27 @@ class Test(Base):
         self.vao_ref = glGenVertexArrays(1)
         glBindVertexArray(self.vao_ref)
 
-        position_data = [[0.8, 0.0, 0.0], [0.4, 0.6, 0.0], [-0.4, 0.6, 0.0], [-0.8, 0.0, 0.0], [-0.4, -0.6, 0.0],
-                         [0.4, -0.6, 0.0]]
+        position_data = [
+            [0.8, 0.0, 0.0],
+            [0.4, 0.6, 0.0],
+            [-0.4, 0.6, 0.0],
+            [-0.8, 0.0, 0.0],
+            [-0.4, -0.6, 0.0],
+            [0.4, -0.6, 0.0],
+        ]
 
         self.vertex_count = len(position_data)
         position_attribute = Attribute(DataType.vec3, position_data)
         position_attribute.associate_variable(self.program_ref, "position")
 
-        color_data = [[1.0, 0.0, 0.0], [1.0, 0.5, 0.0], [1.0, 1.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0],
-                      [0.5, 0.0, 1.0]]
+        color_data = [
+            [1.0, 0.0, 0.0],
+            [1.0, 0.5, 0.0],
+            [1.0, 1.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [0.5, 0.0, 1.0],
+        ]
 
         color_attribute = Attribute(DataType.vec3, color_data)
         color_attribute.associate_variable(self.program_ref, "vertexColor")

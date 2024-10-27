@@ -43,9 +43,7 @@ class TextureMaterial(Material):
         super().__init__(vertex_shader_code, fragment_shader_code)
 
         self.add_uniform(DataType.vec3, "baseColor", [1.0, 1.0, 1.0])
-        self.add_uniform(
-            DataType.sampler2D, "texture", [
-                texture.texture_ref, 1])
+        self.add_uniform(DataType.sampler2D, "texture", [texture.texture_ref, 1])
         self.add_uniform(DataType.vec2, "repeatUV", [1.0, 1.0])
         self.add_uniform(DataType.vec2, "offsetUV", [0.0, 0.0])
 

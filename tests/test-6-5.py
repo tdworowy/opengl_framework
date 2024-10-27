@@ -34,8 +34,7 @@ class Test(Base):
         self.scene.add(self.dir_light)
 
         sphere_geometry = SphereGeometry()
-        phong_material = PhongMaterial(
-            Texture("../images/grid.jpg"), use_shadow=True)
+        phong_material = PhongMaterial(Texture("../images/grid.jpg"), use_shadow=True)
 
         sphere1 = Mesh(sphere_geometry, phong_material)
         sphere1.set_position([-2, 1, 0])
@@ -48,9 +47,7 @@ class Test(Base):
         self.renderer.enable_shadows(self.dir_light)
 
         depth_texture = self.renderer.shadow_object.render_target.texture
-        shadow_display = Mesh(
-            RectangleGeometry(),
-            TextureMaterial(depth_texture))
+        shadow_display = Mesh(RectangleGeometry(), TextureMaterial(depth_texture))
         shadow_display.set_position([-1, 3, 0])
         self.scene.add(shadow_display)
 

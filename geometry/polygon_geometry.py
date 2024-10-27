@@ -18,7 +18,8 @@ class PolygonGeometry(Geometry):
             position_data.append([0, 0, 0])
             position_data.append([radius * cos(n * A), radius * sin(n * A), 0])
             position_data.append(
-                [radius * cos((n + 1) * A), radius * sin((n + 1) * A), 0])
+                [radius * cos((n + 1) * A), radius * sin((n + 1) * A), 0]
+            )
 
             color_data.append([1, 1, 1])
             color_data.append([1, 0, 0])
@@ -26,8 +27,7 @@ class PolygonGeometry(Geometry):
 
             uv_data.append(uv_center)
             uv_data.append([cos(n * A) * 0.5 + 0.5, sin(n * A) * 0.5 + 0.5])
-            uv_data.append([cos((n + 1) * A) * 0.5 + 0.5,
-                           sin((n + 1) * A) * 0.5 + 0.5])
+            uv_data.append([cos((n + 1) * A) * 0.5 + 0.5, sin((n + 1) * A) * 0.5 + 0.5])
 
             normal_data.append(normal_vector)
             normal_data.append(normal_vector)

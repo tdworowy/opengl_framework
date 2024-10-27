@@ -51,14 +51,13 @@ class Test(Base):
         noise_text = Texture("../images/rgb-noise.jpg")
         gird_text = Texture("../images/grid.jpg")
 
-        self.distort_material = Material(
-            vertex_shader_code, fragment_shader_code)
+        self.distort_material = Material(vertex_shader_code, fragment_shader_code)
         self.distort_material.add_uniform(
-            DataType.sampler2D, "noise", [
-                noise_text.texture_ref, 1])
+            DataType.sampler2D, "noise", [noise_text.texture_ref, 1]
+        )
         self.distort_material.add_uniform(
-            DataType.sampler2D, "image", [
-                gird_text.texture_ref, 2])
+            DataType.sampler2D, "image", [gird_text.texture_ref, 2]
+        )
         self.distort_material.add_uniform(DataType.float, "time", 0.0)
         self.distort_material.locate_uniforms()
 

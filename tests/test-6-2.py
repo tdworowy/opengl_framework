@@ -31,10 +31,8 @@ class Test(Base):
 
         geometry = RectangleGeometry(width=2, height=2)
         bump_material = LambertMaterial(
-            texture=color_tex,
-            bump_texture=bump_tex,
-            properties={
-                "bumpStrength": 1})
+            texture=color_tex, bump_texture=bump_tex, properties={"bumpStrength": 1}
+        )
 
         mesh = Mesh(geometry, bump_material)
         self.scene.add(mesh)

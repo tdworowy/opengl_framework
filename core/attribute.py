@@ -29,19 +29,16 @@ class Attribute:
             case DataType.int:
                 glVertexAttribPointer(variable_ref, 1, GL_INT, False, 0, None)
             case DataType.float:
-                glVertexAttribPointer(
-                    variable_ref, 1, GL_FLOAT, False, 0, None)
+                glVertexAttribPointer(variable_ref, 1, GL_FLOAT, False, 0, None)
             case DataType.vec2:
-                glVertexAttribPointer(
-                    variable_ref, 2, GL_FLOAT, False, 0, None)
+                glVertexAttribPointer(variable_ref, 2, GL_FLOAT, False, 0, None)
             case DataType.vec3:
-                glVertexAttribPointer(
-                    variable_ref, 3, GL_FLOAT, False, 0, None)
+                glVertexAttribPointer(variable_ref, 3, GL_FLOAT, False, 0, None)
             case DataType.vec4:
-                glVertexAttribPointer(
-                    variable_ref, 4, GL_FLOAT, False, 0, None)
+                glVertexAttribPointer(variable_ref, 4, GL_FLOAT, False, 0, None)
             case _:
                 raise Exception(
-                    f"Attribute {variable_name} has unknown type {self.data_type}")
+                    f"Attribute {variable_name} has unknown type {self.data_type}"
+                )
 
         glEnableVertexAttribArray(variable_ref)

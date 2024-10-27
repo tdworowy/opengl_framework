@@ -13,7 +13,7 @@ class Texture:
         self.properties = {
             "magFilter": GL.GL_LINEAR,
             "minFilter": GL.GL_LINEAR_MIPMAP_LINEAR,
-            "wrap": GL.GL_REPEAT
+            "wrap": GL.GL_REPEAT,
         }
 
         self.set_properties(properties)
@@ -47,27 +47,22 @@ class Texture:
             0,
             GL.GL_RGBA,
             GL.GL_UNSIGNED_BYTE,
-            pixel_data)
+            pixel_data,
+        )
         GL.glGenerateMipmap(GL.GL_TEXTURE_2D)
 
         GL.glTexParameteri(
-            GL.GL_TEXTURE_2D,
-            GL.GL_TEXTURE_MAG_FILTER,
-            self.properties["magFilter"])
+            GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, self.properties["magFilter"]
+        )
         GL.glTexParameteri(
-            GL.GL_TEXTURE_2D,
-            GL.GL_TEXTURE_MIN_FILTER,
-            self.properties["minFilter"])
+            GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, self.properties["minFilter"]
+        )
 
         GL.glTexParameteri(
-            GL.GL_TEXTURE_2D,
-            GL.GL_TEXTURE_WRAP_S,
-            self.properties["wrap"])
+            GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, self.properties["wrap"]
+        )
         GL.glTexParameteri(
-            GL.GL_TEXTURE_2D,
-            GL.GL_TEXTURE_WRAP_T,
-            self.properties["wrap"])
+            GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, self.properties["wrap"]
+        )
 
-        GL.glTexParameterfv(
-            GL.GL_TEXTURE_2D, GL.GL_TEXTURE_BORDER_COLOR, [
-                1, 1, 1, 1])
+        GL.glTexParameterfv(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_BORDER_COLOR, [1, 1, 1, 1])

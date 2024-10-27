@@ -6,8 +6,14 @@ from material.line_type import LineType
 
 
 class GridHelper(Mesh):
-    def __init__(self, size=10, divisions=10, grid_color=(0, 0, 0),
-                 center_color=(0.5, 0.5, 0.5), line_width=1):
+    def __init__(
+        self,
+        size=10,
+        divisions=10,
+        grid_color=(0, 0, 0),
+        center_color=(0.5, 0.5, 0.5),
+        line_width=1,
+    ):
         geometry = Geometry()
         position_data = []
         color_data = []
@@ -41,10 +47,12 @@ class GridHelper(Mesh):
         geometry.add_attribute(DataType.vec3, "vertexColor", color_data)
         geometry.count_vertices()
 
-        material = LineMaterial({
-            "useVertexColors": True,
-            "lineWidth": line_width,
-            "lineType": LineType.segments
-        })
+        material = LineMaterial(
+            {
+                "useVertexColors": True,
+                "lineWidth": line_width,
+                "lineType": LineType.segments,
+            }
+        )
 
         super().__init__(geometry, material)

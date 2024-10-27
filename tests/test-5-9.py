@@ -28,11 +28,9 @@ class Test(Base):
 
         geometry = RectangleGeometry()
         tile_set = Texture("../images/crate.jpg")
-        spriteMaterial = SpriteMaterial(tile_set, {
-            "billboard": 1,
-            "tileCount": [4, 4],
-            "tileNumber": 0
-        })
+        spriteMaterial = SpriteMaterial(
+            tile_set, {"billboard": 1, "tileCount": [4, 4], "tileNumber": 0}
+        )
         self.tiles_per_second = 8
 
         self.sprite = Mesh(geometry, spriteMaterial)

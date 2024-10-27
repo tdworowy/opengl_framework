@@ -18,10 +18,7 @@ class Test(Base):
         self.camera = Camera(aspect_ratio=800 / 600)
         self.camera.set_position([0, 0, 7])
 
-        geometry = SphereGeometry(
-            radius=3,
-            radius_segments=128,
-            height_segments=32)
+        geometry = SphereGeometry(radius=3, radius_segments=128, height_segments=32)
         vs_code = """
         uniform mat4 modelMatrix;
         uniform mat4 viewMatrix;

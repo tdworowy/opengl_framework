@@ -25,9 +25,18 @@ class Test(Base):
         self.rig.set_position([0, 1, 5])
         self.scene.add(self.rig)
 
-        label_texture = TextTexture(text=" This is a Crate. ", system_font_name="Arial Bold", font_size=40,
-                                    font_color=[0, 0, 200], image_width=256, image_height=128, align_horizontal=0.5,
-                                    align_vertical=0.5, image_border_width=4, image_border_color=[255, 0, 0])
+        label_texture = TextTexture(
+            text=" This is a Crate. ",
+            system_font_name="Arial Bold",
+            font_size=40,
+            font_color=[0, 0, 200],
+            image_width=256,
+            image_height=128,
+            align_horizontal=0.5,
+            align_vertical=0.5,
+            image_border_width=4,
+            image_border_color=[255, 0, 0],
+        )
 
         label_material = TextureMaterial(label_texture)
         label_geometry = RectangleGeometry(width=1, height=0.5)

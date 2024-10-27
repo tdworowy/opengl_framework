@@ -8,10 +8,13 @@ class Material:
     def __init__(self, vertex_shader_code: str, fragment_shader_code: str):
 
         self.program_ref = OpenGLUtils.initialize_program(
-            vertex_shader_code, fragment_shader_code)
-        self.uniforms = {"modelMatrix": Uniform(DataType.mat4, None),
-                         "viewMatrix": Uniform(DataType.mat4, None),
-                         "projectionMatrix": Uniform(DataType.mat4, None)}
+            vertex_shader_code, fragment_shader_code
+        )
+        self.uniforms = {
+            "modelMatrix": Uniform(DataType.mat4, None),
+            "viewMatrix": Uniform(DataType.mat4, None),
+            "projectionMatrix": Uniform(DataType.mat4, None),
+        }
 
         self.settings = {"drawStyle": GL_TRIANGLES}
 

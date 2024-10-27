@@ -30,7 +30,8 @@ class Test(Base):
         self.scene.add(ambient)
 
         self.directional = DirectionalLight(
-            color=(0.8, 0.8, 0.8), direction=(-1, -1, -2))
+            color=(0.8, 0.8, 0.8), direction=(-1, -1, -2)
+        )
         self.scene.add(self.directional)
 
         self.point = PointLight(color=(0.9, 0, 0), position=(1, 1, 0.8))
@@ -44,9 +45,7 @@ class Test(Base):
         self.point.add(point_helper)
 
         sphere_geometry = SphereGeometry()
-        flat_material = FlatMaterial(
-            properties={
-                "baseColor": [0.6, 0.2, 0, 2]})
+        flat_material = FlatMaterial(properties={"baseColor": [0.6, 0.2, 0, 2]})
 
         grid = Texture("../images/grid.jpg")
 

@@ -43,15 +43,27 @@ class Test(Base):
         self.vao_ref = glGenVertexArrays(1)
         glBindVertexArray(self.vao_ref)
 
-        position_data = [[0.8, 0.0, 0.0], [0.4, 0.6, 0.0], [-0.4, 0.6, 0.0], [-0.8, 0.0, 0.0], [-0.4, -0.6, 0.0],
-                         [0.4, -0.6, 0.0]]
+        position_data = [
+            [0.8, 0.0, 0.0],
+            [0.4, 0.6, 0.0],
+            [-0.4, 0.6, 0.0],
+            [-0.8, 0.0, 0.0],
+            [-0.4, -0.6, 0.0],
+            [0.4, -0.6, 0.0],
+        ]
 
         self.vertex_count = len(position_data)
         position_attribute = Attribute(DataType.vec3, position_data)
         position_attribute.associate_variable(self.program_ref, "position")
 
-        color_data = [[1.0, 0.0, 0.0], [1.0, 0.5, 0.0], [1.0, 1.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0],
-                      [0.5, 0.0, 1.0]]
+        color_data = [
+            [1.0, 0.0, 0.0],
+            [1.0, 0.5, 0.0],
+            [1.0, 1.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [0.5, 0.0, 1.0],
+        ]
 
         color_attribute = Attribute(DataType.vec3, color_data)
         color_attribute.associate_variable(self.program_ref, "vertexColor")
@@ -61,19 +73,32 @@ class Test(Base):
 
         glLineWidth(random.randint(1, 6))
 
-        position_data = [random_position(), random_position(), random_position(), random_position(), random_position(),
-                         random_position()]
+        position_data = [
+            random_position(),
+            random_position(),
+            random_position(),
+            random_position(),
+            random_position(),
+            random_position(),
+        ]
 
         position_attribute = Attribute(DataType.vec3, position_data)
         position_attribute.associate_variable(self.program_ref, "position")
 
-        color_data = [random_color(), random_color(), random_color(), random_color(), random_color(),
-                      random_color()]
+        color_data = [
+            random_color(),
+            random_color(),
+            random_color(),
+            random_color(),
+            random_color(),
+            random_color(),
+        ]
 
         color_attribute = Attribute(DataType.vec3, color_data)
         color_attribute.associate_variable(self.program_ref, "vertexColor")
         glDrawArrays(GL_LINE_LOOP, 0, self.vertex_count)
-       # glDrawArrays(GL_TRIANGLE_FAN, 0, self.vertex_count)
+
+    # glDrawArrays(GL_TRIANGLE_FAN, 0, self.vertex_count)
 
 
 if __name__ == "__main__":

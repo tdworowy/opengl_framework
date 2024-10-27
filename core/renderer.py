@@ -18,16 +18,20 @@ class Renderer:
         self.window_size = pygame.display.get_surface().get_size()
         self.shadow_enabled = False
 
-    def enable_shadows(self, shadow_light: Light,
-                       strength=0.5, resolution=(512, 512)):
+    def enable_shadows(self, shadow_light: Light, strength=0.5, resolution=(512, 512)):
         self.shadow_enabled = True
         self.shadow_object = Shadow(
-            shadow_light,
-            strength=strength,
-            resolution=resolution)
+            shadow_light, strength=strength, resolution=resolution
+        )
 
-    def render(self, scene: Scene, camera: Camera,
-               clear_color=True, clear_depth=True, render_target: RenderTarget = None):
+    def render(
+        self,
+        scene: Scene,
+        camera: Camera,
+        clear_color=True,
+        clear_depth=True,
+        render_target: RenderTarget = None,
+    ):
 
         descendant_list = scene.get_descendant_list()
 
@@ -37,13 +41,14 @@ class Renderer:
         mesh_list = list(filter(mesh_filter, descendant_list))
         if self.shadow_enabled:
             GL.glBindFramebuffer(
-                GL.GL_FRAMEBUFFER,
-                self.shadow_object.render_target.frame_buffer_ref)
+                GL.GL_FRAMEBUFFER, self.shadow_object.render_target.frame_buffer_ref
+            )
             GL.glViewport(
                 0,
                 0,
                 self.shadow_object.render_target.width,
-                self.shadow_object.render_target.height)
+                self.shadow_object.render_target.height,
+            )
             GL.glClearColor(1, 1, 1, 1)
             GL.glClear(GL.GL_COLOR_BUFFER_BIT)
             GL.glClear(GL.GL_DEPTH_BUFFER_BIT)
@@ -57,7 +62,8 @@ class Renderer:
                 if mesh.material.settings["drawStyle"] != GL.GL_TRIANGLES:
                     continue
                 GL.glBindVertexArray(mesh.vao_ref)
-                self.shadow_object.material.uniforms["modelMatrix"].data = mesh.get_world_matrix(
+                self.shadow_object.material.uniforms["modelMatrix"].data = (
+                    mesh.get_world_matrix()
                 )
                 for var_name, unif_obj in self.shadow_object.material.uniforms.items():
                     unif_obj.upload_data()
@@ -67,9 +73,7 @@ class Renderer:
             GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0)
             GL.glViewport(0, 0, *self.window_size)
         else:
-            GL.glBindFramebuffer(
-                GL.GL_FRAMEBUFFER,
-                render_target.frame_buffer_ref)
+            GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, render_target.frame_buffer_ref)
             GL.glViewport(0, 0, render_target.width, render_target.height)
 
         if clear_color:
@@ -83,14 +87,11 @@ class Renderer:
         camera.update_view_matrix()
 
         descendant_list = scene.get_descendant_list()
-        mesh_list = list(
-            filter(
-                lambda x: isinstance(
-                    x,
-                    Mesh),
-                descendant_list))
+        mesh_list = list(filter(lambda x: isinstance(x, Mesh), descendant_list))
 
-        def light_filter(x): return isinstance(x, Light)
+        def light_filter(x):
+            return isinstance(x, Light)
+
         light_list = list(filter(light_filter, descendant_list))
 
         while len(light_list) < 4:
@@ -101,8 +102,7 @@ class Renderer:
                 continue
             GL.glUseProgram(mesh.material.program_ref)
             GL.glBindVertexArray(mesh.vao_ref)
-            mesh.material.uniforms["modelMatrix"].data = mesh.get_world_matrix(
-            )
+            mesh.material.uniforms["modelMatrix"].data = mesh.get_world_matrix()
             mesh.material.uniforms["viewMatrix"].data = camera.view_matrix
             mesh.material.uniforms["projectionMatrix"].data = camera.projection_matrix
 
@@ -115,7 +115,8 @@ class Renderer:
                     light_object = light_list[light_number]
                     mesh.material.uniforms[light_name].data = light_object
             if "viewPosition" in mesh.material.uniforms.keys():
-                mesh.material.uniforms["viewPosition"].data = camera.get_world_position(
+                mesh.material.uniforms["viewPosition"].data = (
+                    camera.get_world_position()
                 )
 
             for variable_name, uniform_object in mesh.material.uniforms.items():
@@ -123,6 +124,5 @@ class Renderer:
 
             mesh.material.update_render_settings()
             GL.glDrawArrays(
-                mesh.material.settings["drawStyle"],
-                0,
-                mesh.geometry.vertex_count)
+                mesh.material.settings["drawStyle"], 0, mesh.geometry.vertex_count
+            )

@@ -55,9 +55,9 @@ class BoxGeometry(Geometry):
             P2,
             P1,
             P2,
-            P3]
-        color_data = [C1] * 6 + [C2] * 6 + [C3] * \
-            6 + [C4] * 6 + [C5] * 6 + [C6] * 6
+            P3,
+        ]
+        color_data = [C1] * 6 + [C2] * 6 + [C3] * 6 + [C4] * 6 + [C5] * 6 + [C6] * 6
 
         self.add_attribute(DataType.vec3, "vertexPosition", position_data)
         self.add_attribute(DataType.vec3, "vertexColor", color_data)
@@ -69,8 +69,7 @@ class BoxGeometry(Geometry):
         N1, N2 = [1, 0, 0], [-1, 0, 0]
         N3, N4 = [0, 1, 0], [0, -1, 0]
         N5, N6 = [0, 0, 1], [0, 0, -1]
-        normal_data = [N1] * 6 + [N2] * 6 + [N3] * \
-            6 + [N4] * 6 + [N5] * 6 + [N6] * 6
+        normal_data = [N1] * 6 + [N2] * 6 + [N3] * 6 + [N4] * 6 + [N5] * 6 + [N6] * 6
         self.add_attribute(DataType.vec3, "vertexNormal", normal_data)
         self.add_attribute(DataType.vec3, "faceNormal", normal_data)
 

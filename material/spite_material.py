@@ -65,9 +65,7 @@ class SpriteMaterial(Material):
         """
         super().__init__(vertex_shader_code, fragment_shader_code)
         self.add_uniform(DataType.vec3, "baseColor", [1.0, 1.0, 1.0])
-        self.add_uniform(
-            DataType.sampler2D, "texture", [
-                texture.texture_ref, 1])
+        self.add_uniform(DataType.sampler2D, "texture", [texture.texture_ref, 1])
         self.add_uniform(DataType.bool, "billboard", False)
         self.add_uniform(DataType.float, "tileNumber", -1)
         self.add_uniform(DataType.vec2, "tileCount", [1.1])

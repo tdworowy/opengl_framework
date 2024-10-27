@@ -6,16 +6,22 @@ from OpenGL import GL
 
 
 class Shadow:
-    def __init__(self, light_source: Light, strength=0.5, resolution=(
-            512, 512), camera_bounds=(-5, 5, -5, 5, 0, 20), bias=0.01):
+    def __init__(
+        self,
+        light_source: Light,
+        strength=0.5,
+        resolution=(512, 512),
+        camera_bounds=(-5, 5, -5, 5, 0, 20),
+        bias=0.01,
+    ):
         self.light_source = light_source
         self.camera = Camera()
         self.camera.set_orthographic(*camera_bounds)
         self.light_source.add(self.camera)
 
         self.render_target = RenderTarget(
-            resolution, properties={
-                "wrap": GL.GL_CLAMP_TO_BORDER})
+            resolution, properties={"wrap": GL.GL_CLAMP_TO_BORDER}
+        )
         self.material = DepthMaterial()
 
         self.strength = strength

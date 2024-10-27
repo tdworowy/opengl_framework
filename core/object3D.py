@@ -60,15 +60,19 @@ class Object3D:
         self.apply_matrix(m, local_coord)
 
     def get_position(self) -> list[int]:
-        return [self.transform.item((0, 3)),
-                self.transform.item((1, 3)),
-                self.transform.item((2, 3))]
+        return [
+            self.transform.item((0, 3)),
+            self.transform.item((1, 3)),
+            self.transform.item((2, 3)),
+        ]
 
     def get_world_position(self) -> list[int]:
         world_transform = self.get_world_matrix()
-        return [world_transform.item((0, 3)),
-                world_transform.item((1, 3)),
-                world_transform.item((2, 3))]
+        return [
+            world_transform.item((0, 3)),
+            world_transform.item((1, 3)),
+            world_transform.item((2, 3)),
+        ]
 
     def set_position(self, position: list[int]):
         self.transform.itemset((0, 3), position[0])
@@ -76,13 +80,12 @@ class Object3D:
         self.transform.itemset((2, 3), position[2])
 
     def look_at(self, target_position: list[int]):
-        self.transform = Matrix.make_look_at(
-            self.get_world_position(), target_position)
+        self.transform = Matrix.make_look_at(self.get_world_position(), target_position)
 
     def get_rotation_matrix(self) -> np.ndarray:
-        return np.array([self.transform[0][0:3],
-                         self.transform[1][0:3],
-                         self.transform[2][0:3]])
+        return np.array(
+            [self.transform[0][0:3], self.transform[1][0:3], self.transform[2][0:3]]
+        )
 
     def get_direction(self) -> list[int]:
         forward = np.array([0, 0, -1])
@@ -90,8 +93,9 @@ class Object3D:
 
     def set_direction(self, direction: tuple):
         position = self.get_position()
-        target_position = [position[0] + direction[0],
-                           position[1] + direction[1],
-                           position[2] + direction[2]
-                           ]
+        target_position = [
+            position[0] + direction[0],
+            position[1] + direction[1],
+            position[2] + direction[2],
+        ]
         self.look_at(target_position)

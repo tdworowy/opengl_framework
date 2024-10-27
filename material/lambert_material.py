@@ -5,8 +5,13 @@ from OpenGL import GL
 
 
 class LambertMaterial(Material):
-    def __init__(self, texture: Texture = None,
-                 properties=None, bump_texture=None, use_shadow=False):
+    def __init__(
+        self,
+        texture: Texture = None,
+        properties=None,
+        bump_texture=None,
+        use_shadow=False,
+    ):
         if properties is None:
             properties = {}
 
@@ -169,16 +174,16 @@ class LambertMaterial(Material):
         else:
             self.add_uniform(DataType.bool, "useTexture", True)
             self.add_uniform(
-                DataType.sampler2D, "textureSampler", [
-                    texture.texture_ref, 1])
+                DataType.sampler2D, "textureSampler", [texture.texture_ref, 1]
+            )
 
         if bump_texture is None:
             self.add_uniform(DataType.bool, "useBumpTexture", False)
         else:
             self.add_uniform(DataType.bool, "useBumpTexture", True)
             self.add_uniform(
-                DataType.sampler2D, "bumpTextureSampler", [
-                    bump_texture.texture_ref, 2])
+                DataType.sampler2D, "bumpTextureSampler", [bump_texture.texture_ref, 2]
+            )
             self.add_uniform(DataType.float, "bumpStrength", 1.0)
 
         if not use_shadow:

@@ -48,8 +48,8 @@ class Test(Base):
         grid_text = Texture("../images/grid.jpg")
         self.wave_material = Material(vertex_shader_code, fragment_shader_code)
         self.wave_material.add_uniform(
-            DataType.sampler2D, "texture", [
-                grid_text.texture_ref, 1])
+            DataType.sampler2D, "texture", [grid_text.texture_ref, 1]
+        )
         self.wave_material.add_uniform(DataType.float, "time", 0.0)
         self.wave_material.locate_uniforms()
 

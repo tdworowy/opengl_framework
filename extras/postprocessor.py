@@ -10,8 +10,9 @@ from geometry.geometry import Geometry
 
 class Postprocessor:
 
-    def __init__(self, renderer: Renderer, scene: Scene,
-                 camera: Camera, final_render_target=None):
+    def __init__(
+        self, renderer: Renderer, scene: Scene, camera: Camera, final_render_target=None
+    ):
         self.renderer = renderer
         self.scene_list = [scene]
         self.camera_list = [camera]
@@ -29,9 +30,9 @@ class Postprocessor:
         uv_data = [T0, T1, T3, T0, T3, T2]
 
         self.rectangle_geometry.add_attribute(
-            DataType.vec2, "vertexPosition", position_data)
-        self.rectangle_geometry.add_attribute(
-            DataType.vec2, "vertexUV", uv_data)
+            DataType.vec2, "vertexPosition", position_data
+        )
+        self.rectangle_geometry.add_attribute(DataType.vec2, "vertexUV", uv_data)
         self.rectangle_geometry.count_vertices()
 
     def add_effect(self, effect: BaseEffect):

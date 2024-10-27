@@ -4,10 +4,7 @@ from effects.base_effect import BaseEffect
 
 class VignetteEffect(BaseEffect):
 
-    def __init__(self,
-                 dimming_start=0.4,
-                 dimming_end=1.0,
-                 dimming_color=(0, 0, 0)):
+    def __init__(self, dimming_start=0.4, dimming_end=1.0, dimming_color=(0, 0, 0)):
         vertex_shader_code = """
            in vec2 vertexPosition;
            in vec2 vertexUV;

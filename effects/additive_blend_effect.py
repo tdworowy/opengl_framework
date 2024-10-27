@@ -5,8 +5,9 @@ from effects.base_effect import BaseEffect
 
 class AdditiveBlendEffect(BaseEffect):
 
-    def __init__(self, blend_texture: Texture = None,
-                 original_strength=1, blend_strength=1):
+    def __init__(
+        self, blend_texture: Texture = None, original_strength=1, blend_strength=1
+    ):
         vertex_shader_code = """
         in vec2 vertexPosition;
         in vec2 vertexUV;
@@ -35,8 +36,8 @@ class AdditiveBlendEffect(BaseEffect):
         super().__init__(vertex_shader_code, fragment_shader_code)
         self.add_uniform(DataType.sampler2D, "textureSampler", [None, 1])
         self.add_uniform(
-            DataType.sampler2D, "blendTextureSampler", [
-                blend_texture.texture_ref, 1])
+            DataType.sampler2D, "blendTextureSampler", [blend_texture.texture_ref, 1]
+        )
         self.add_uniform(DataType.float, "originalStrength", original_strength)
         self.add_uniform(DataType.float, "blendStrength", blend_strength)
         self.locate_uniforms()

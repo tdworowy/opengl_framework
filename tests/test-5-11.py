@@ -67,9 +67,8 @@ class Test(Base):
         self.sphere.rotate_y(0.01337)
         self.rig.update(self.input, self.delta_time)
         self.renderer.render(
-            self.scene,
-            self.sky_camera,
-            render_target=self.render_target)
+            self.scene, self.sky_camera, render_target=self.render_target
+        )
         self.renderer.render(self.scene, self.camera)
 
 

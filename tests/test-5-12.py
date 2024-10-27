@@ -36,11 +36,8 @@ class Test(Base):
 
         grass_geometry = RectangleGeometry(width=100, height=100)
         grass_material = TextureMaterial(
-            Texture("../images/grass.jpg"),
-            properties={
-                "repeatUV": [
-                    50,
-                    50]})
+            Texture("../images/grass.jpg"), properties={"repeatUV": [50, 50]}
+        )
         grass = Mesh(grass_geometry, grass_material)
         grass.rotate_x(-math.pi / 2)
         self.scene.add(grass)
@@ -51,8 +48,7 @@ class Test(Base):
         self.sphere.set_position([0, 1, 0])
         self.scene.add(self.sphere)
 
-        self.postprocessor = Postprocessor(
-            self.renderer, self.scene, self.camera)
+        self.postprocessor = Postprocessor(self.renderer, self.scene, self.camera)
         self.postprocessor.add_effect(TintEffect(tint_color=[1, 0, 0]))
         self.postprocessor.add_effect(ColorReduceEffect(levels=5))
         self.postprocessor.add_effect(PixelEffect(resolution=(800, 600)))

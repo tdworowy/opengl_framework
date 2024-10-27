@@ -38,9 +38,7 @@ class Test(Base):
         vao_ref = glGenVertexArrays(1)
         glBindVertexArray(vao_ref)
 
-        position_data = [[0.0, 0.2, 0.0],
-                         [0.1, -0.2, 0.0],
-                         [-0.1, -0.2, 0.0]]
+        position_data = [[0.0, 0.2, 0.0], [0.1, -0.2, 0.0], [-0.1, -0.2, 0.0]]
         self.vertex_count = len(position_data)
         position_attribute = Attribute(DataType.vec3, position_data)
         position_attribute.associate_variable(self.program_ref, "position")
@@ -51,8 +49,7 @@ class Test(Base):
 
         p_matrix = Matrix.make_perspective()
         self.projection_matrix = Uniform(DataType.mat4, p_matrix)
-        self.projection_matrix.locate_variable(
-            self.program_ref, "projectionMatrix")
+        self.projection_matrix.locate_variable(self.program_ref, "projectionMatrix")
 
         self.move_speed = 0.5
         self.turn_speed = 90 * (pi / 180)
@@ -99,15 +96,15 @@ class Test(Base):
 
         if self.input.is_key_pressed("k"):
             m = Matrix.make_translation(0, -move_amount, 0)
-            self.model_matrix.data = self.model_matrix.data  @ m
+            self.model_matrix.data = self.model_matrix.data @ m
 
         if self.input.is_key_pressed("j"):
             m = Matrix.make_translation(-move_amount, 0, 0)
-            self.model_matrix.data = self.model_matrix.data  @ m
+            self.model_matrix.data = self.model_matrix.data @ m
 
         if self.input.is_key_pressed("l"):
             m = Matrix.make_translation(move_amount, 0, 0)
-            self.model_matrix.data = self.model_matrix.data  @ m
+            self.model_matrix.data = self.model_matrix.data @ m
 
         if self.input.is_key_pressed("u"):
             m = Matrix.make_rotation_z(turn_amount)

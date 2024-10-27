@@ -28,8 +28,7 @@ class Test(Base):
         geometry.add_attribute(DataType.vec3, "vertexPosition", pos_data)
         geometry.count_vertices()
 
-        point_material = PointMaterial(
-            {"baseColor": [1, 1, 0], "pointSize": 10})
+        point_material = PointMaterial({"baseColor": [1, 1, 0], "pointSize": 10})
         point_mesh = Mesh(geometry, point_material)
 
         line_material = LineMaterial({"baseColor": [1, 0, 1], "lineWidth": 4})

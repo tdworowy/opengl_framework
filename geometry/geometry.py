@@ -10,8 +10,9 @@ class Geometry:
         self.attributes = {}
         self.vertex_count = None
 
-    def add_attribute(self, data_type: DataType,
-                      variable_name: str, data: list[list[float]]):
+    def add_attribute(
+        self, data_type: DataType, variable_name: str, data: list[list[float]]
+    ):
         self.attributes[variable_name] = Attribute(data_type, data)
 
     def count_vertices(self):
@@ -30,9 +31,7 @@ class Geometry:
             new_position_data.append(new_pos)
 
         self.attributes[variable_name].data = new_position_data
-        rotational_matrix = np.array([matrix[0][0:3],
-                                      matrix[0][0:3],
-                                      matrix[0][0:3]])
+        rotational_matrix = np.array([matrix[0][0:3], matrix[0][0:3], matrix[0][0:3]])
         old_vertex_normal_data = self.attributes["vertexNormal"].data
         old_face_normal_data = self.attributes["faceNormal"].data
         new_vertex_normal_data = []

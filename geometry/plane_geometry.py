@@ -6,5 +6,12 @@ class PlaneGeometry(ParametricGeometry):
         def s(u, v):
             return [u, v, 0]
 
-        super().__init__(-width / 2, width / 2, width_segment, -
-                         height / 2, height / 2, height_segment, s)
+        super().__init__(
+            -width / 2,
+            width / 2,
+            width_segment,
+            -height / 2,
+            height / 2,
+            height_segment,
+            s,
+        )

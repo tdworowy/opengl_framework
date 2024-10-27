@@ -30,8 +30,7 @@ class Test(Base):
         self.vao_tri = glGenVertexArrays(1)
         glBindVertexArray(self.vao_tri)
 
-        position_data_tri = [[-0.5, 0.8, 0.0],
-                             [-0.2, 0.2, 0.0], [-0.8, 0.2, 0.0]]
+        position_data_tri = [[-0.5, 0.8, 0.0], [-0.2, 0.2, 0.0], [-0.8, 0.2, 0.0]]
 
         self.vertex_count_tri = len(position_data_tri)
         position_attribute_tri = Attribute(DataType.vec3, position_data_tri)
@@ -40,14 +39,16 @@ class Test(Base):
         self.vao_square = glGenVertexArrays(1)
         glBindVertexArray(self.vao_square)
 
-        position_data_square = [[0.8, 0.8, 0.0], [
-            0.8, 0.2, 0.0], [0.2, 0.2, 0.0], [0.2, 0.8, 0.0]]
+        position_data_square = [
+            [0.8, 0.8, 0.0],
+            [0.8, 0.2, 0.0],
+            [0.2, 0.2, 0.0],
+            [0.2, 0.8, 0.0],
+        ]
 
         self.vertex_count_square = len(position_data_square)
-        position_attribute_square = Attribute(
-            DataType.vec3, position_data_square)
-        position_attribute_square.associate_variable(
-            self.program_ref, "position")
+        position_attribute_square = Attribute(DataType.vec3, position_data_square)
+        position_attribute_square.associate_variable(self.program_ref, "position")
 
     def update(self):
         glUseProgram(self.program_ref)

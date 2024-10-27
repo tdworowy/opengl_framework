@@ -17,6 +17,5 @@ class Mesh(Object3D):
         self.vao_ref = glGenVertexArrays(1)
         glBindVertexArray(self.vao_ref)
         for variable_name, attribute_object in geometry.attributes.items():
-            attribute_object.associate_variable(
-                material.program_ref, variable_name)
+            attribute_object.associate_variable(material.program_ref, variable_name)
         glBindVertexArray(0)

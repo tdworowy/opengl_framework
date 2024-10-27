@@ -26,10 +26,7 @@ class Test(Base):
         axes = AxesHelper(axis_length=2)
         self.scene.add(axes)
 
-        grid = GridHelper(
-            size=20, grid_color=[
-                1, 1, 1], center_color=[
-                1, 1, 0])
+        grid = GridHelper(size=20, grid_color=[1, 1, 1], center_color=[1, 1, 0])
         grid.rotate_x(-pi / 2)
         self.scene.add(grid)
 

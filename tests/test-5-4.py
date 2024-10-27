@@ -50,14 +50,13 @@ class Test(Base):
         """
         grid_text = Texture("../images/grid.jpg")
         crate_text = Texture("../images/crate.jpg")
-        self.blend_material = Material(
-            vertex_shader_code, fragment_shader_code)
+        self.blend_material = Material(vertex_shader_code, fragment_shader_code)
         self.blend_material.add_uniform(
-            DataType.sampler2D, "texture1", [
-                grid_text.texture_ref, 1])
+            DataType.sampler2D, "texture1", [grid_text.texture_ref, 1]
+        )
         self.blend_material.add_uniform(
-            DataType.sampler2D, "texture2", [
-                crate_text.texture_ref, 2])
+            DataType.sampler2D, "texture2", [crate_text.texture_ref, 2]
+        )
         self.blend_material.add_uniform(DataType.float, "time", 0.0)
         self.blend_material.locate_uniforms()
 

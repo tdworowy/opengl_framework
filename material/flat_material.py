@@ -110,8 +110,8 @@ class FlatMaterial(Material):
         else:
             self.add_uniform(DataType.bool, "useTexture", True)
             self.add_uniform(
-                DataType.sampler2D, "textureSampler", [
-                    texture.texture_ref, 1])
+                DataType.sampler2D, "textureSampler", [texture.texture_ref, 1]
+            )
 
         self.locate_uniforms()
 

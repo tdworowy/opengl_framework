@@ -8,15 +8,24 @@ def calc_normal(p0, p1, p2):
     v2 = np.array(p2) - np.array(p0)
     orthogonal_vector = np.cross(v1, v2)
     norm = np.linalg.norm(orthogonal_vector)
-    normal_vector = orthogonal_vector / norm if norm > 1e-6 \
-        else np.array(p0) / np.linalg.norm(p0)
+    normal_vector = (
+        orthogonal_vector / norm if norm > 1e-6 else np.array(p0) / np.linalg.norm(p0)
+    )
     return normal_vector
 
 
 class ParametricGeometry(Geometry):
 
-    def __init__(self, u_start: float, u_end: float, u_resolution: int, v_start: float,
-                 v_end: float, v_resolution: int, surface_function: callable):
+    def __init__(
+        self,
+        u_start: float,
+        u_end: float,
+        u_resolution: int,
+        v_start: float,
+        v_end: float,
+        v_resolution: int,
+        surface_function: callable,
+    ):
 
         super().__init__()  # super call is not in book example
         delta_u = (u_end - u_start) / u_resolution
@@ -70,32 +79,45 @@ class ParametricGeometry(Geometry):
                 p_b = position[x_index + 1][y_index + 0]
                 p_d = position[x_index + 0][y_index + 1]
                 p_c = position[x_index + 1][y_index + 1]
-                position_data += [p_a.copy(),
-                                  p_b.copy(),
-                                  p_c.copy(),
-                                  p_a.copy(),
-                                  p_c.copy(),
-                                  p_d.copy()]
+                position_data += [
+                    p_a.copy(),
+                    p_b.copy(),
+                    p_c.copy(),
+                    p_a.copy(),
+                    p_c.copy(),
+                    p_d.copy(),
+                ]
 
                 color_data += [C1, C2, C3, C4, C5, C6]
                 uv_a = uvs[x_index + 0][y_index + 0]
                 uv_b = uvs[x_index + 1][y_index + 0]
                 uv_c = uvs[x_index + 0][y_index + 1]
                 uv_d = uvs[x_index + 1][y_index + 1]
-                uv_data += [uv_a, uv_b, uv_c,
-                            uv_a, uv_c, uv_d]
+                uv_data += [uv_a, uv_b, uv_c, uv_a, uv_c, uv_d]
 
                 n_a = vertex_normals[x_index + 0][y_index + 0]
                 n_b = vertex_normals[x_index + 1][y_index + 0]
                 n_c = vertex_normals[x_index + 0][y_index + 1]
                 n_d = vertex_normals[x_index + 1][y_index + 1]
-                vertex_normal_data += [n_a.copy(), n_b.copy(), n_c.copy(),
-                                       n_a.copy(), n_c.copy(), n_d.copy()]
+                vertex_normal_data += [
+                    n_a.copy(),
+                    n_b.copy(),
+                    n_c.copy(),
+                    n_a.copy(),
+                    n_c.copy(),
+                    n_d.copy(),
+                ]
 
                 fn0 = calc_normal(p_a, p_b, p_c)
                 fn1 = calc_normal(p_a, p_c, p_d)
-                face_normal_data += [fn0.copy(), fn0.copy(), fn0.copy(),
-                                     fn1.copy(), fn1.copy(), fn1.copy()]
+                face_normal_data += [
+                    fn0.copy(),
+                    fn0.copy(),
+                    fn0.copy(),
+                    fn1.copy(),
+                    fn1.copy(),
+                    fn1.copy(),
+                ]
 
         self.add_attribute(DataType.vec3, "vertexPosition", position_data)
         self.add_attribute(DataType.vec3, "vertexColor", color_data)

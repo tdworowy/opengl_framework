@@ -36,7 +36,8 @@ class Test(Base):
         geometry.count_vertices()
 
         material = SurfaceMaterial(
-            {"useVertexColors": True, "wireframe": True, "lineWidth": 8})
+            {"useVertexColors": True, "wireframe": True, "lineWidth": 8}
+        )
         self.mesh = Mesh(geometry, material)
         self.scene.add(self.mesh)
 
